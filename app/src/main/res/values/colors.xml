@@ -6,4 +6,5 @@
     <color name="BlueColor">#03A9F4</color>
     <color name="black_overlay">#66000000</color>
     <color name="white">#ffff</color>
+    <color name="gray">#BAB9B9</color>
 </resources>

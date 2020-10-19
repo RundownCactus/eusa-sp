@@ -24,7 +24,7 @@
         </item>
         <item
             android:id="@+id/nav_applyforwork"
-            android:title="Apply for Work">
+            android:title="Work Details">
         </item>
     </group>
 

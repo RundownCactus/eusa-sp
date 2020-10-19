@@ -15,7 +15,7 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplashScreen.this,MainActivity.class);
+                Intent intent=new Intent(SplashScreen.this,ServiceProviderPhoneVerification.class);
                 startActivity(intent);
                 finish();
             }

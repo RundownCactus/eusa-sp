@@ -10,32 +10,33 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/userfirstname"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:hint="First Name"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
-    android:textColorHint="#BAB9B9"
-    app:boxStrokeColor="#03A9F4"
-    app:hintTextColor="#03A9F4"
-    app:endIconMode="clear_text"
-    app:endIconTint="#BAB9B9"
-    app:layout_constraintBottom_toTopOf="@+id/userlastname"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/guideline"
-    tools:ignore="HardcodedText,MissingConstraints">
-
-    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userfirstname"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:cursorVisible="true"
-        android:inputType="textEmailAddress"
-        android:textColor="#000000" />
-</com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginBottom="10dp"
+        android:hint="First Name"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:textColorHint="#BAB9B9"
+        app:boxStrokeColor="#03A9F4"
+        app:hintTextColor="#03A9F4"
+        app:endIconMode="clear_text"
+        app:endIconTint="#BAB9B9"
+        app:layout_constraintBottom_toTopOf="@+id/userlastname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        tools:ignore="HardcodedText,MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userfirstnameedit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:inputType="textEmailAddress"
+            android:textColor="#000000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userlastname"
