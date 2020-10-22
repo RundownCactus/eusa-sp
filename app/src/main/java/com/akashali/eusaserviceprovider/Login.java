@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class Login extends AppCompatActivity {
     /*Button userlogin;
@@ -18,17 +19,21 @@ public class Login extends AppCompatActivity {
 
     MaterialButton sendverificationcodelogin;
     ImageView verifybackbuttonlogin;
-
+    TextInputEditText phno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        phno = findViewById(R.id.verifyphonenumberlogin);
+
         verifybackbuttonlogin=findViewById(R.id.verifybackbuttonlogin);
         sendverificationcodelogin=findViewById(R.id.sendverificationcodelogin);
         sendverificationcodelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String ph = phno.getText().toString();
                 Intent intent=new Intent(Login.this,LoginReceiveVerificationCode.class);
+                intent.putExtra("phno",ph);
                 startActivity(intent);
             }
         });
