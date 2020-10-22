@@ -42,8 +42,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyRvAdapter.MyViewHolder holder, int position) {
-        holder.newimage.setImageBitmap(newList.get(position).getImage());
-        holder.name.setText(newList.get(position).getName());
+        holder.name.setText(newList.get(position).getFname());
         holder.phone.setText(newList.get(position).getPhone());
         holder.email.setText(newList.get(position).getEmail());
         holder.address.setText(newList.get(position).getAddress());

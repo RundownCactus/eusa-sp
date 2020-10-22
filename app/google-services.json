@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "64467682321-kqcivnp0cea1o8lppdp20247prpbgd9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akashali.eusaserviceprovider",
+            "certificate_hash": "8bd0c03d6a355ab36d4d54c1feab57577867ac51"
+          }
+        },
+        {
           "client_id": "64467682321-208i8k01l0hbcmdsb464b8k5pkekhido.apps.googleusercontent.com",
           "client_type": 3
         }

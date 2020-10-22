@@ -24,7 +24,7 @@ public class ServiceProviderPhoneVerification extends AppCompatActivity {
             public void onClick(View view) {
                 String ph = phno.getText().toString();
                 Log.d("WAH","+92"+ph);
-                Intent intent=new Intent(ServiceProviderPhoneVerification.this,ServiceProviderReceiveVerificationCode.class);
+                Intent intent=new Intent(ServiceProviderPhoneVerification.this,GetInfoStepOne.class);
                 intent.putExtra("phno",ph);
                 startActivity(intent);
             }

@@ -3,34 +3,38 @@ package com.akashali.eusaserviceprovider;
 import android.graphics.Bitmap;
 
 public class Contact {
-    private Bitmap image;
-    private String name;
+    private String fname;
+    private String lname;
     private String phone;
     private String email;
     private String address;
+    private String city;
+    private String type;
+    private String cnic;
 
-
-
-    public Contact(Bitmap image, String name, String phone, String email, String address) {
-        this.image=image;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-    }
-    public Bitmap getImage() {
-        return image;
+    public String getCnic() {
+        return cnic;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-    public String getName() {
-        return name;
+    public void setCnic(String cnic) {
+        this.cnic = cnic;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getPhone() {
@@ -55,5 +59,32 @@ public class Contact {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Contact(String cnic, String fname, String lname, String phone, String email, String address, String city, String type) {
+        this.cnic = cnic;
+        this.fname = fname;
+        this.lname = lname;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.city = city;
+        this.type = type;
     }
 }
