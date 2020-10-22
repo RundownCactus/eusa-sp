@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
-        <activity android:name=".GetInfoStepFour"></activity>
+        <activity android:name=".LoginReceiveVerificationCode"></activity>
+        <activity android:name=".LetsGetStarted" />
+        <activity android:name=".GetInfoStepFour" />
         <activity android:name=".GetInfoStepThree" />
         <activity android:name=".GetInfoStepTwo" />
         <activity android:name=".GetInfoStepOne" />
