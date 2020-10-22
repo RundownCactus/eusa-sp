@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EUSAServiceProvider.iml" filepath="$PROJECT_DIR$/EUSAServiceProvider.iml" group="EUSAServiceProvider" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="EUSAServiceProvider/app" />
+      <module fileurl="file://$PROJECT_DIR$/EUSAServiceProvider.iml" filepath="$PROJECT_DIR$/EUSAServiceProvider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EUSAServiceProvider.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EUSAServiceProvider.app.iml" />
     </modules>
   </component>
 </project>
