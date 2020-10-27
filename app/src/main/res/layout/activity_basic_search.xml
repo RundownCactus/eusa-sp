@@ -14,7 +14,6 @@
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
         android:layout_width="300dp"
-        android:visibility="gone"
         android:layout_gravity="start"
         android:layout_height="match_parent"
         tools:ignore="MissingClass">
@@ -22,8 +21,7 @@
     </com.google.android.material.navigation.NavigationView>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +29,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:paddingRight="16dp"
-            android:background="#fff"
+            android:background="#F3F1F1"
             tools:ignore="MissingConstraints">
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -41,11 +39,61 @@
                     android:id="@+id/mainmenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu"
+                    app:srcCompat="@drawable/ic_menu"
                     tools:ignore="MissingConstraints">
 
                 </ImageView>
             </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/availablecard"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="90dp"
+                app:cardCornerRadius="8dp"
+                android:elevation="40dp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                tools:ignore="MissingConstraints"
+                android:layout_marginStart="90dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/availabletext"
+                        android:text="Available for work"
+                        android:textColor="@color/BlueColor"
+                        android:textSize="28sp"
+                        android:layout_marginLeft="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp">
+
+                    </TextView>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/availableswitch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/availabletext"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </com.google.android.material.switchmaterial.SwitchMaterial>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,14 +104,16 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="8dp"
                 android:elevation="40dp"
                 app:cardBackgroundColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints"
                 android:layout_marginStart="16dp">
@@ -73,33 +123,40 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="8dp"
                 android:elevation="40dp"
                 app:cardBackgroundColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/card1"
-                app:layout_constraintEnd_toStartOf="@+id/card3"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints">
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card1"
+                tools:ignore="MissingConstraints"
+                android:layout_marginStart="16dp">
 
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="8dp"
                 android:elevation="40dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="8dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints">
+                app:layout_constraintTop_toBottomOf="@+id/card2"
+                tools:ignore="MissingConstraints"
+                android:layout_marginStart="16dp">
 
 
             </com.google.android.material.card.MaterialCardView>
