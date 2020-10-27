@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".GetInfoStepThree">
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/updesign4"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:layout_marginStart="16dp">
+        <ImageView
+            android:src="@drawable/circle_gray"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp">
+        </ImageView>
+
+        <ImageView
+            android:src="@drawable/circle_gray"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp">
+        </ImageView>
+        <TextView
+            android:text="3"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/white"
+            android:background="@drawable/circle_blue"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:ignore="HardcodedText"
+            android:layout_marginStart="8dp">
+        </TextView>
+        <ImageView
+            android:src="@drawable/circle_gray"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp">
+        </ImageView>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/updesign4"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@drawable/updesign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/downdesign4"
+        android:layout_width="160dp"
+        android:layout_height="100dp"
+        android:background="@drawable/downdesign"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/citystep3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:layout_marginTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        app:boxStrokeColor="#03A9F4"
+        app:counterEnabled="true"
+        app:hintTextColor="#03A9F4"
+        android:textColorHint="#BAB9B9"
+        android:background="@color/white"
+        app:boxBackgroundColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updesign4"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
+
+    <AutoCompleteTextView
+        android:id="@+id/getcitydropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textColor="#000"
+        android:inputType="none"
+        tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addressstep3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Address"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColorHint="#BAB9B9"
+        app:boxStrokeColor="#03A9F4"
+        app:endIconMode="clear_text"
+        app:endIconTint="#BAB9B9"
+        app:hintTextColor="#03A9F4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/citystep3"
+        tools:ignore="HardcodedText,MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/getaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:inputType="text"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/prevbuttonstep3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Prev"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressstep3"
+        tools:ignore="HardcodedText,MissingConstraints"
+        android:layout_marginStart="16dp">
+
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nextbuttonstep3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Next"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressstep3"
+        tools:ignore="HardcodedText,MissingConstraints"
+        android:layout_marginEnd="16dp">
+
+    </com.google.android.material.button.MaterialButton>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

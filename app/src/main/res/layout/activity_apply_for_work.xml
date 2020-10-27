@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".ApplyForWork">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/BlueColor"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imageViewApplyForWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_baseline_arrow_back_white"
+            app:layout_constraintBottom_toTopOf="@+id/textViewApplyForWork"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/textViewApplyForWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Work Details"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewApplyForWork"
+            android:layout_marginStart="16dp">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usercnicapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="CNIC"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="#BAB9B9"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:endIconMode="clear_text"
+                app:endIconTint="#BAB9B9"
+                app:hintTextColor="#03A9F4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usercnicapplydata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:cursorVisible="true"
+                    android:inputType="number"
+                    android:textColor="#000" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userworktypeapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Work Type"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:hintTextColor="#03A9F4"
+                android:textColorHint="#BAB9B9"
+                android:background="@color/white"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/usercnicapply"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints">
+
+                <AutoCompleteTextView
+                    android:id="@+id/exposeddropdownmenuforapplywork"
+                    android:dropDownSelector="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textColor="#000"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userhourlyrateapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hourly Rate"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:textColorHint="#BAB9B9"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:counterMaxLength="4"
+                app:hintTextColor="#03A9F4"
+                app:prefixText="Rs. "
+                app:prefixTextColor="#000"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userworktypeapply"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:inputType="number"
+                    android:background="@color/white"
+                    android:textColor="#000" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userexperienceapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Experience"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:textColorHint="#BAB9B9"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:counterMaxLength="3"
+                app:hintTextColor="#03A9F4"
+                app:suffixText="Years"
+                app:suffixTextColor="#000"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userhourlyrateapply"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:inputType="numberDecimal"
+                    android:background="@color/white"
+                    android:textColor="#000" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usercityapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:hintTextColor="#03A9F4"
+                android:textColorHint="#BAB9B9"
+                android:background="@color/white"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userexperienceapply"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
+
+                <AutoCompleteTextView
+                    android:id="@+id/exposeddropdownmenuforcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textColor="#000"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/useraddressapply"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="#BAB9B9"
+                app:boxStrokeColor="#03A9F4"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:endIconMode="clear_text"
+                app:endIconTint="#BAB9B9"
+                app:hintTextColor="#03A9F4"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usercityapply"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText,MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:inputType="text"
+                    android:background="@color/white"
+                    android:textColor="#000" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/savebutton"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/useraddressapply"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
