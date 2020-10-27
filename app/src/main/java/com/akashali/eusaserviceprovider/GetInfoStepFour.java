@@ -1,7 +1,7 @@
 package com.akashali.eusaserviceprovider;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import java.util.Random;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +19,7 @@ public class GetInfoStepFour extends AppCompatActivity {
     AutoCompleteTextView type;
     FirebaseDatabase rootnode;
     DatabaseReference myref;
+    Random rand = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +54,69 @@ public class GetInfoStepFour extends AppCompatActivity {
                 Log.d("second", phno);
 
                 Intent intent=new Intent(GetInfoStepFour.this,BasicSearch.class);
+                rootnode = FirebaseDatabase.getInstance();
+
+
 
                 Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type);
-                //Contact newSP = new Contact("131031234","Salman","last","q03335234","Emailcd","E114","Islamanad","Electrician");
-
-                rootnode = FirebaseDatabase.getInstance();
                 myref = rootnode.getReference().child("Users").child("ServiceProviders").child(phno);
                 myref.setValue(newSP);
+
+                /*Contact newSP = new Contact("4231906883047","Asil","Abidi","+923331214567","ServiceProvider@hotmail.com","Beverly Centre, f6","Islamabad","Electrician");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("3427607556341","Salib","Raza","+923335649870","ServiceProvider@hotmail.com","f8/1 Markaz","Islamabad","Electrician");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("6754887990645","Omer","Tayyar","+923098756445","ServiceProvider@hotmail.com","Shop No 3 F11/1 Markaz Olympus Mall","Islamabad","Electrician");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("5643209878906","Khilat","Naqvi","+923125647778","ServiceProvider@hotmail.com","G-9/2 Markaz","Islamabad","Electrician");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+
+                newSP = new Contact("7676756889789","Hamza","Mukhtar","+923333245456","ServiceProvider@hotmail.com","Shop no 4 E11/4","Islamabad","Plumber");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("4234156448796","Jilani","Ghulam","+923339807656","ServiceProvider@hotmail.com","Kohsar Market Shop no 65 Basement F-6","Islamabad","Plumber");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("3298054483096","Salman","Hayat","+923337658111","ServiceProvider@hotmail.com","House No 37 Street 8 Sector F11/1","Islamabad","Plumber");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+
+                newSP = new Contact("4289705778096","Noman","Shaikh","+923471210807","ServiceProvider@hotmail.com","WellMart E11/4 ","Islamabad","Carpenter");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("6234165774987","Jalil","Memon","+923126447774","ServiceProvider@hotmail.com","Vostro World, f11 ","Islamabad","Carpenter");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("6451090886375","Ahsan","Buriro","+923547786665","ServiceProvider@hotmail.com","Shop No 56 Commercial market G-7","Islamabad","Carpenter");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("2398765008975","Salik","Soomro","+923124557776","ServiceProvider@hotmail.com","Shop No 12 E-7 Markaz","Islamabad","Carpenter");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+
+                newSP = new Contact("3256467889076","Bilawal","Chandio","+923473124445","ServiceProvider@hotmail.com","Shop no 54 G-7 Markaz","Islamabad","Cleaner");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("5467788776654","Asif","Rana","+923335654789","ServiceProvider@hotmail.com","Shop No 21 F-15 Markaz","Islamabad","Cleaner");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("9854432556476","Virat","Kohli","+923335463423","ServiceProvider@hotmail.com","Shop No 43 Near Moon Market D-12","Islamabad","Cleaner");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+
+                newSP = new Contact("5643234221654","Khalid","Channa","+923124998708","ServiceProvider@hotmail.com","Shop No 32 F11/1 Markaz","Islamabad","Car Mechanic");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("9806584332548","Mosab","Ayaz","+923097765554","ServiceProvider@hotmail.com","Shop No 2  Sulaiman Market F11/1","Islamabad","Car Mechanic");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);
+                newSP = new Contact("2132378665488","Ali","Akbar","+923330908976","ServiceProvider@hotmail.com","Shaheen Chemist, F11","Islamabad","Car Mechanic");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
+                myref.setValue(newSP);*/
                 startActivity(intent);
             }
         });

@@ -31,6 +31,9 @@ public class GetInfoStepTwo extends AppCompatActivity {
         nextbuttonstep2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!validateEmail() | !validateCnic()){
+                    return;
+                }
                 String fname = getIntent().getStringExtra("fname");
                 String lname = getIntent().getStringExtra("lname");
                 String phno = getIntent().getStringExtra("phno");
@@ -46,4 +49,41 @@ public class GetInfoStepTwo extends AppCompatActivity {
             }
         });
     }
+
+    private boolean validateCnic(){
+        String Cnic = cnic.getText().toString();
+
+        if(Cnic.isEmpty()){
+            cnic.setError("Please Enter a CNIC Email");
+            return false;
+        }
+        else if(Cnic.length() < 13){
+            cnic.setError("Incorrect CNIC Provided");
+            return false;
+        }else if(Cnic.length() > 13){
+            cnic.setError("Incorrect CNIC Provided");
+            return false;
+        }else{
+            cnic.setError(null);
+            return true;
+        }
+    };
+
+    private boolean validateEmail(){
+        String emal = email.getText().toString();
+        String pattern = "[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if(emal.isEmpty()){
+            email.setError("Please Enter a Valid Email");
+            return false;
+        }
+        else if(!emal.matches(pattern)){
+            email.setError("Incorrect Email Provided");
+            return false;
+        }else{
+            email.setError(null);
+            return true;
+        }
+    };
+
 }

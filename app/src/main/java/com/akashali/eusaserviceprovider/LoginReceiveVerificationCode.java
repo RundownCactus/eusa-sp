@@ -25,24 +25,25 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
     MaterialButton verifycodelogin;
     ImageView loginverifybackbutton;
     String verCode;
-
+    String phno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_receive_verification_code);
 
-        String phno = getIntent().getStringExtra("phno");
+        phno = getIntent().getStringExtra("phno");
         sendCode(phno);
 
         loginverifybackbutton=findViewById(R.id.loginverifybackbutton);
         verifycodelogin=findViewById(R.id.verifycodelogin);
-        /*        verifycodelogin.setOnClickListener(new View.OnClickListener() {
+        verifycodelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginReceiveVerificationCode.this,BasicSearch.class);
+                intent.putExtra("phno",phno);
                 startActivity(intent);
             }
-        });*/
+        });
         loginverifybackbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +94,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Intent intent = new Intent(getApplicationContext(),GetInfoStepOne.class);
+                    intent.putExtra("phno",phno);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
     String verCode;
+    String phno;
     ImageView verifybackbutton;
     MaterialButton verifycode;
     @Override
@@ -34,17 +35,18 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
         verifybackbutton=findViewById(R.id.verifybackbutton);
         verifycode=findViewById(R.id.verifycode);
 
-        String phno = getIntent().getStringExtra("phno");
+        phno = getIntent().getStringExtra("phno");
         sendCode(phno);
 
 
-        //   verifycode.setOnClickListener(new View.OnClickListener() {
-        //  @Override
-        //   public void onClick(View view) {
-        //         Intent intent=new Intent(ReceiveVerificationCode.this,BasicSearch.class);
-        //    startActivity(intent);
-        //  }
-        //});
+        verifycode.setOnClickListener(new View.OnClickListener() {
+          @Override
+           public void onClick(View view) {
+                 Intent intent=new Intent(ServiceProviderReceiveVerificationCode.this,GetInfoStepOne.class);
+                 intent.putExtra("phno",phno);
+                 startActivity(intent);
+          }
+        });
         verifybackbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +98,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Intent intent = new Intent(getApplicationContext(),GetInfoStepOne.class);
+                    intent.putExtra("phno",phno);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

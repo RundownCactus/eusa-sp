@@ -23,6 +23,9 @@ public class GetInfoStepOne extends AppCompatActivity {
         nextbuttonstep1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!validateLname() | !validateFname()){
+                    return;
+                }
                 String first = fname.getText().toString();
                 String last = lname.getText().toString();
                 String phno = getIntent().getStringExtra("phno");
@@ -34,4 +37,39 @@ public class GetInfoStepOne extends AppCompatActivity {
             }
         });
     }
+
+
+    private boolean validateFname(){
+        String fn = fname.getText().toString();
+        String nowhitespace = "(?=\\s+$)";
+
+        if(fn.isEmpty()){
+            fname.setError("Please Enter a Valid Name");
+            return false;
+        }
+        else if(fn.matches(nowhitespace)){
+            fname.setError("Name Cannot Have WhiteSpace");
+            return false;
+        }else{
+            fname.setError(null);
+            return true;
+        }
+    };
+    private boolean validateLname(){
+        String fn = lname.getText().toString();
+        String nowhitespace = "(?=\\s+$)";
+
+        if(fn.isEmpty()){
+            lname.setError("Please Enter a Valid Name");
+            return false;
+        }
+        else if(fn.matches(nowhitespace)){
+            lname.setError("Name Cannot Have WhiteSpace");
+            return false;
+        }else{
+            lname.setError(null);
+            return true;
+        }
+    };
+
 }
