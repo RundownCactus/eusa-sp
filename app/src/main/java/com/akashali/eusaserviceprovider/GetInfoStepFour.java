@@ -54,12 +54,12 @@ public class GetInfoStepFour extends AppCompatActivity {
 
                 Intent intent=new Intent(GetInfoStepFour.this,BasicSearch.class);
 
-                //Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type);
-                Contact newSP = new Contact("131031234","Salman","last","q03335234","Emailcd","E114","Islamanad","Electrician");
+                Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type);
+                //Contact newSP = new Contact("131031234","Salman","last","q03335234","Emailcd","E114","Islamanad","Electrician");
 
                 rootnode = FirebaseDatabase.getInstance();
-                myref = rootnode.getReference();
-                myref.setValue("ARAYBC");
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(phno);
+                myref.setValue(newSP);
                 startActivity(intent);
             }
         });
