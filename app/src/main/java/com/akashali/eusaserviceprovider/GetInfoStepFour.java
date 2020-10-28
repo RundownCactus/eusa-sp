@@ -56,6 +56,7 @@ public class GetInfoStepFour extends AppCompatActivity {
                 Intent intent=new Intent(GetInfoStepFour.this,BasicSearch.class);
                 rootnode = FirebaseDatabase.getInstance();
 
+<<<<<<< HEAD
 
 
                 Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type);
@@ -117,6 +118,14 @@ public class GetInfoStepFour extends AppCompatActivity {
                 newSP = new Contact("2132378665488","Ali","Akbar","+923330908976","ServiceProvider@hotmail.com","Shaheen Chemist, F11","Islamabad","Car Mechanic");
                 myref = rootnode.getReference().child("Users").child("ServiceProviders").child(String.valueOf(rand.nextInt()));
                 myref.setValue(newSP);*/
+=======
+                Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type);
+                //Contact newSP = new Contact("131031234","Salman","last","q03335234","Emailcd","E114","Islamanad","Electrician");
+
+                rootnode = FirebaseDatabase.getInstance();
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(phno);
+                myref.setValue(newSP);
+>>>>>>> 71987af9ebd0c7714d7045a1762dab8a4a553109
                 startActivity(intent);
             }
         });
