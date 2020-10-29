@@ -11,6 +11,8 @@ public class Contact {
     private String city;
     private String type;
     private String cnic;
+    private float rating;
+    private float pricerat;
 
     public String getCnic() {
         return cnic;
@@ -31,6 +33,35 @@ public class Contact {
 
     public String getLname() {
         return lname;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public float getPricerat() {
+        return pricerat;
+    }
+
+    public void setPricerat(float pricerat) {
+        this.pricerat = pricerat;
+    }
+
+    public Contact(String cnic, String fname, String lname, String phone, String email, String address, String city, String type, float rating, float pricerat) {
+        this.fname = fname;
+        this.lname = lname;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.city = city;
+        this.type = type;
+        this.cnic = cnic;
+        this.rating = rating;
+        this.pricerat = pricerat;
     }
 
     public void setLname(String lname) {
@@ -77,14 +108,5 @@ public class Contact {
         this.type = type;
     }
 
-    public Contact(String cnic, String fname, String lname, String phone, String email, String address, String city, String type) {
-        this.cnic = cnic;
-        this.fname = fname;
-        this.lname = lname;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.city = city;
-        this.type = type;
-    }
+
 }
