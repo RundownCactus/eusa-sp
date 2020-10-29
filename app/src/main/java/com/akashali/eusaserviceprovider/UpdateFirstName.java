@@ -1,5 +1,6 @@
 package com.akashali.eusaserviceprovider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,9 +8,13 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class UpdateFirstName extends AppCompatActivity {
     Button updateuserfirstnamebutton;
     ImageView imageViewBackArrowUpdateFirstName;
+    TextInputEditText getupdateuserfirstname;
+    Intent result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,9 +23,14 @@ public class UpdateFirstName extends AppCompatActivity {
         updateuserfirstnamebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                result=new Intent();
+                String firstname=getupdateuserfirstname.getText().toString();
+                result.putExtra("firstname",firstname);
+                setResult(RESULT_OK, result);
+                finish();
             }
         });
+        getupdateuserfirstname=findViewById(R.id.getupdateuserfirstname);
         imageViewBackArrowUpdateFirstName=findViewById(R.id.imageViewBackArrowUpdateFirstName);
         imageViewBackArrowUpdateFirstName.setOnClickListener(new View.OnClickListener() {
             @Override

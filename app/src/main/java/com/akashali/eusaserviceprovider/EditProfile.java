@@ -15,9 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EditProfile extends AppCompatActivity {
-    Integer REQUEST_CAMERA=1, SELECT_IMAGE=0;
+    Integer REQUEST_CAMERA=1, SELECT_IMAGE=0, REQUEST_FIRSTNAME=2,REQUEST_LASTNAME=3,REQUEST_PHONE=4,REQUEST_EMAIL=5;
     ImageView imageViewBackArrowEditprofile,accountimage,circleImageView;
     TextView firstnameeditprofile,lastnameeditprofile,phoneeditprofile,emaileditprofile,passwordeditprofile;
+    String firstname,lastname,phone,email,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +36,14 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(EditProfile.this,UpdateFirstName.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_FIRSTNAME);
             }
         });
         lastnameeditprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(EditProfile.this,UpdateLastName.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_LASTNAME);
             }
         });
         phoneeditprofile=findViewById(R.id.phoneeditprofile);
@@ -50,7 +51,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(EditProfile.this,UpdatePhoneNumber.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_PHONE);
             }
         });
         emaileditprofile=findViewById(R.id.emaileditprofile);
@@ -58,7 +59,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(EditProfile.this,UpdateEmailAddress.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_EMAIL);
             }
         });
         passwordeditprofile=findViewById(R.id.passwordeditprofile);
@@ -130,6 +131,26 @@ public class EditProfile extends AppCompatActivity {
                 Uri selectImage=data.getData();
                 circleImageView.setImageURI(selectImage);
                 accountimage.setVisibility(View.GONE);
+            }
+            else if(requestCode==REQUEST_FIRSTNAME)
+            {
+                firstname=data.getStringExtra("firstname");
+                firstnameeditprofile.setText(firstname);
+            }
+            else if(requestCode==REQUEST_LASTNAME)
+            {
+                lastname=data.getStringExtra("lastname");
+                lastnameeditprofile.setText(lastname);
+            }
+            else if(requestCode==REQUEST_PHONE)
+            {
+                phone=data.getStringExtra("phone");
+                phoneeditprofile.setText(phone);
+            }
+            else if(requestCode==REQUEST_EMAIL)
+            {
+                email=data.getStringExtra("email");
+                emaileditprofile.setText(email);
             }
         }
     }
