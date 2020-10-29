@@ -114,38 +114,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/hourlyratestep4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Hourly Rate"
-        android:paddingEnd="16dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:textColorHint="#BAB9B9"
-        app:boxStrokeColor="#03A9F4"
-        app:counterEnabled="true"
-        app:counterMaxLength="4"
-        app:hintTextColor="#03A9F4"
-        app:prefixText="Rs. "
-        app:prefixTextColor="#000"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/worktypestep4"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/gethourlyrate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:inputType="number"
-            android:background="@color/white"
-            android:textColor="#000" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/experiencestep4"
@@ -166,7 +135,7 @@
         app:suffixTextColor="#000"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hourlyratestep4"
+        app:layout_constraintTop_toBottomOf="@id/worktypestep4"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry">
 
