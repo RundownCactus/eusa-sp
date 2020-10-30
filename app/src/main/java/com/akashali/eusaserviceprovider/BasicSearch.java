@@ -21,6 +21,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     TextView text;
     ImageView profileImage;
     List<Contact> contacts;
+    FirebaseDatabase rootnode;
+    DatabaseReference myref;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,21 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         View header = navigationView.getHeaderView(0);
         text = (TextView) header.findViewById(R.id.username);
         profileImage=(ImageView) header.findViewById(R.id.circleImageView);
+        rootnode = FirebaseDatabase.getInstance();
+        myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
+
+        myref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                text.setText(snapshot.child("fname").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
