@@ -46,8 +46,8 @@ public class GetInfoStepFour extends AppCompatActivity {
                 String city = getIntent().getStringExtra("city");
                 String addr = getIntent().getStringExtra("addr");
                 String phno = getIntent().getStringExtra("phno");
-                float rat = (float) 2.5;
-                float prat = (float) 2.5;
+                String rat = "2.5";
+                String prat = "2.5";
                 Log.d("second", email);
                 Log.d("second", cnic);
                 Log.d("second", fname);
