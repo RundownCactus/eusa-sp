@@ -29,7 +29,8 @@ public class GetInfoStepOne extends AppCompatActivity {
                 String first = fname.getText().toString();
                 String last = lname.getText().toString();
                 String phno = getIntent().getStringExtra("phno");
-                Intent intent=new Intent(GetInfoStepOne.this,GetInfoStepTwo.class);
+                Intent intent = new Intent(getApplicationContext(),GetInfoStepTwo.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("fname",first);
                 intent.putExtra("lname",last);
                 intent.putExtra("phno",phno);

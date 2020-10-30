@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,6 +20,7 @@ public class GetInfoStepFour extends AppCompatActivity {
     AutoCompleteTextView type;
     FirebaseDatabase rootnode;
     DatabaseReference myref;
+    private FirebaseAuth mAuth;
     Random rand = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +57,15 @@ public class GetInfoStepFour extends AppCompatActivity {
                 Log.d("second", Type);
                 Log.d("second", phno);
 
-                Intent intent=new Intent(GetInfoStepFour.this,BasicSearch.class);
+                Intent intent = new Intent(getApplicationContext(),BasicSearch.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                 rootnode = FirebaseDatabase.getInstance();
 
 
 
                 Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type,rat,prat);
-                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(phno);
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
                 myref.setValue(newSP);
 
               /*  Contact newSP = new Contact("4231906883047","Asil","Abidi","+923331214567","ServiceProvider@hotmail.com","Beverly Centre, f6","Islamabad","Electrician",(float)2.5,(float)2.5);

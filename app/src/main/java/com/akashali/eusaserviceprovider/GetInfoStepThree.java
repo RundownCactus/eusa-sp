@@ -41,7 +41,7 @@ public class GetInfoStepThree extends AppCompatActivity {
                 String City = city.getText().toString();
                 String Addr = addr.getText().toString();
 
-                Intent intent=new Intent(GetInfoStepThree.this,GetInfoStepFour.class);
+                Intent intent = new Intent(getApplicationContext(),GetInfoStepFour.class);
                 intent.putExtra("email",email);
                 intent.putExtra("cnic",cnic);
                 intent.putExtra("fname",fname);
@@ -49,7 +49,10 @@ public class GetInfoStepThree extends AppCompatActivity {
                 intent.putExtra("city",City);
                 intent.putExtra("addr",Addr);
                 intent.putExtra("phno",phno);
+                intent.putExtra("phno",phno);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+
             }
         });
         String[] city = new String[] {"Islamabad", "Rawalpindi"};

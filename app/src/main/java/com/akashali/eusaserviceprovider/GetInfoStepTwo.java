@@ -39,12 +39,13 @@ public class GetInfoStepTwo extends AppCompatActivity {
                 String phno = getIntent().getStringExtra("phno");
                 String Email = email.getText().toString();
                 String Cnic = cnic.getText().toString();
-                Intent intent=new Intent(GetInfoStepTwo.this,GetInfoStepThree.class);
+                Intent intent = new Intent(getApplicationContext(),GetInfoStepThree.class);
                 intent.putExtra("email",Email);
                 intent.putExtra("cnic",Cnic);
                 intent.putExtra("fname",fname);
                 intent.putExtra("lname",lname);
                 intent.putExtra("phno",phno);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

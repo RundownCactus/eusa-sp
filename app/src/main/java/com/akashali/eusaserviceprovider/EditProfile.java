@@ -11,19 +11,53 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class EditProfile extends AppCompatActivity {
     Integer REQUEST_CAMERA=1, SELECT_IMAGE=0, REQUEST_FIRSTNAME=2,REQUEST_LASTNAME=3,REQUEST_PHONE=4,REQUEST_EMAIL=5;
     ImageView imageViewBackArrowEditprofile,accountimage,circleImageView;
     TextView firstnameeditprofile,lastnameeditprofile,phoneeditprofile,emaileditprofile,passwordeditprofile;
     String firstname,lastname,phone,email,password;
+    FirebaseDatabase rootnode;
+    DatabaseReference myref;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         imageViewBackArrowEditprofile=findViewById(R.id.imageViewBackArrowEditprofile);
+
+        rootnode = FirebaseDatabase.getInstance();
+        myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
+
+        myref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                firstnameeditprofile.setText(snapshot.child("fname").getValue().toString());
+                lastnameeditprofile.setText(snapshot.child("lname").getValue().toString());
+                phoneeditprofile.setText(snapshot.child("phone").getValue().toString());
+                emaileditprofile.setText(snapshot.child("email").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         imageViewBackArrowEditprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,8 +121,8 @@ public class EditProfile extends AppCompatActivity {
 
 
     }
-    private void SelectImage()
-    {
+
+    private void SelectImage(){
         final CharSequence[] items={"Camera","Gallery","Cancel"};
         AlertDialog.Builder builder=new AlertDialog.Builder(EditProfile.this);
         builder.setTitle("Add Image");
@@ -136,21 +170,30 @@ public class EditProfile extends AppCompatActivity {
             {
                 firstname=data.getStringExtra("firstname");
                 firstnameeditprofile.setText(firstname);
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("fname");
+                myref.setValue(firstname);
+
             }
             else if(requestCode==REQUEST_LASTNAME)
             {
                 lastname=data.getStringExtra("lastname");
                 lastnameeditprofile.setText(lastname);
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("lname");
+                myref.setValue(lastname);
             }
             else if(requestCode==REQUEST_PHONE)
             {
                 phone=data.getStringExtra("phone");
                 phoneeditprofile.setText(phone);
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("phone");
+                myref.setValue(phone);
             }
             else if(requestCode==REQUEST_EMAIL)
             {
                 email=data.getStringExtra("email");
                 emaileditprofile.setText(email);
+                myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("email");
+                myref.setValue(email);
             }
         }
     }
