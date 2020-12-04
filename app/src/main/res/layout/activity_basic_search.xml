@@ -136,6 +136,7 @@ tools:context=".BasicSearch">
                     android:layout_height="0dp"
                     android:layout_weight="7"
                     app:srcCompat="@drawable/ic_historyicon"
+                    android:id="@+id/picker"
                     >
                 </ImageView>
                 <TextView

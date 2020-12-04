@@ -7,6 +7,7 @@ import androidx.arch.core.executor.TaskExecutor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
     String phno;
     ImageView verifybackbutton;
     MaterialButton verifycode;
+    EditText CodeByUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
 
         verifybackbutton=findViewById(R.id.verifybackbutton);
         verifycode=findViewById(R.id.verifycode);
-
+        CodeByUser=findViewById(R.id.verificationcode);
         phno = getIntent().getStringExtra("phno");
         sendCode(phno);
 
@@ -42,10 +44,13 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
         verifycode.setOnClickListener(new View.OnClickListener() {
           @Override
            public void onClick(View view) {
-              Intent intent = new Intent(getApplicationContext(),GetInfoStepOne.class);
-              intent.putExtra("phno",phno);
-              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-              startActivity(intent);
+              String code = CodeByUser.getText().toString();
+              if(code.isEmpty() || code.length()<6){
+                  CodeByUser.setError("Wrong OTP");
+                  CodeByUser.requestFocus();
+                  return;
+              }
+              verifyCode(code);
           }
         });
         verifybackbutton.setOnClickListener(new View.OnClickListener() {

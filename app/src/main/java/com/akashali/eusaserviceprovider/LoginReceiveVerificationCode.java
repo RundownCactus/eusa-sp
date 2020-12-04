@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.text.BreakIterator;
 import java.util.concurrent.TimeUnit;
 
 public class LoginReceiveVerificationCode extends AppCompatActivity {
@@ -26,11 +28,13 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
     ImageView loginverifybackbutton;
     String verCode;
     String phno;
+    EditText CodeByUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_receive_verification_code);
-
+        CodeByUser=findViewById(R.id.verificationcode);
         phno = getIntent().getStringExtra("phno");
         sendCode(phno);
 
@@ -39,9 +43,14 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
         verifycodelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent=new Intent(LoginReceiveVerificationCode.this,BasicSearch.class);
-                //intent.putExtra("phno",phno);
-                //startActivity(intent);
+                String code = CodeByUser.getText().toString();
+                if(code.isEmpty() || code.length()<6){
+                    CodeByUser.setError("Wrong OTP");
+                    CodeByUser.requestFocus();
+                    return;
+                }
+                verifyCode(code);
+
             }
         });
         loginverifybackbutton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +102,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Intent intent = new Intent(getApplicationContext(),GetInfoStepOne.class);
+                    Intent intent = new Intent(getApplicationContext(),BasicSearch.class);
                     intent.putExtra("phno",phno);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
