@@ -3,6 +3,7 @@ package com.akashali.eusaserviceprovider;
 import android.graphics.Bitmap;
 
 public class Contact {
+    private String loc;
     private String fname;
     private String lname;
     private String phone;
@@ -22,6 +23,13 @@ public class Contact {
         this.cnic = cnic;
     }
 
+    public String getLoc() {
+        return loc;
+    }
+
+    public void setLoc(String loc) {
+        this.loc = loc;
+    }
 
     public String getFname() {
         return fname;
@@ -51,7 +59,8 @@ public class Contact {
         this.pricerat = pricerat;
     }
 
-    public Contact(String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat) {
+    public Contact(String loc,String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat) {
+        this.loc = loc;
         this.fname = fname;
         this.lname = lname;
         this.phone = phone;

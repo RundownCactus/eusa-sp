@@ -46,6 +46,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     FirebaseDatabase rootnode;
     DatabaseReference myref;
     private FirebaseAuth mAuth;
+    private String Addr;
+    private String Loc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +59,6 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         navigationView=findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
         mainmenu=findViewById(R.id.mainmenu);
-        picker=findViewById(R.id.picker);
-        Places.initialize(getApplicationContext(),"AIzaSyAYE1QHGlPnjvJUxCqqJMQjfkPzN2mCVSQ");
 
     }
 
@@ -93,13 +94,6 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-        picker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BasicSearch.this,PlacePicker.class);
-                startActivity(intent);
-            }
-        });
 
         text.setOnClickListener(new View.OnClickListener() {
             @Override

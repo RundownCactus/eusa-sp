@@ -46,6 +46,7 @@ public class GetInfoStepFour extends AppCompatActivity {
                 String city = getIntent().getStringExtra("city");
                 String addr = getIntent().getStringExtra("addr");
                 String phno = getIntent().getStringExtra("phno");
+                String loc = getIntent().getStringExtra("loc");
                 String rat = "2.5";
                 String prat = "2.5";
                 Log.d("second", email);
@@ -56,6 +57,7 @@ public class GetInfoStepFour extends AppCompatActivity {
                 Log.d("second", addr);
                 Log.d("second", Type);
                 Log.d("second", phno);
+                Log.d("second", loc);
 
                 Intent intent = new Intent(getApplicationContext(),BasicSearch.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -64,7 +66,7 @@ public class GetInfoStepFour extends AppCompatActivity {
 
 
 
-                Contact newSP = new Contact(cnic,fname,lname,phno,email,addr,city,Type,rat,prat);
+                Contact newSP = new Contact(loc,cnic,fname,lname,phno,email,addr,city,Type,rat,prat);
                 myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
                 myref.setValue(newSP);
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.google.android.libraries.places.api.Places;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -16,6 +17,8 @@ public class GetInfoStepThree extends AppCompatActivity {
     MaterialButton prevbuttonstep3,nextbuttonstep3;
     TextInputEditText addr;
     AutoCompleteTextView city;
+    String Addr;
+    String Loc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,15 @@ public class GetInfoStepThree extends AppCompatActivity {
         addr = findViewById(R.id.getaddress);
         prevbuttonstep3=findViewById(R.id.prevbuttonstep3);
         nextbuttonstep3=findViewById(R.id.nextbuttonstep3);
+        Places.initialize(getApplicationContext(),"AIzaSyAYE1QHGlPnjvJUxCqqJMQjfkPzN2mCVSQ");
+
+        addr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(GetInfoStepThree.this,PlacePicker.class);
+                startActivityForResult(intent, 2);
+            }
+        });
         prevbuttonstep3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +51,6 @@ public class GetInfoStepThree extends AppCompatActivity {
                 String cnic = getIntent().getStringExtra("cnic");
                 String phno = getIntent().getStringExtra("phno");
                 String City = city.getText().toString();
-                String Addr = addr.getText().toString();
 
                 Intent intent = new Intent(getApplicationContext(),GetInfoStepFour.class);
                 intent.putExtra("email",email);
@@ -50,6 +61,7 @@ public class GetInfoStepThree extends AppCompatActivity {
                 intent.putExtra("addr",Addr);
                 intent.putExtra("phno",phno);
                 intent.putExtra("phno",phno);
+                intent.putExtra("loc",Loc);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
@@ -65,5 +77,18 @@ public class GetInfoStepThree extends AppCompatActivity {
 
         AutoCompleteTextView cityAutoCompleteTextView = findViewById(R.id.getcitydropdown);
         cityAutoCompleteTextView.setAdapter(newAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==2)
+        {
+            Addr = data.getStringExtra("addr");
+            Loc = data.getStringExtra("loc");
+
+        }
     }
 }
