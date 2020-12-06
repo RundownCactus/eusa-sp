@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,10 +27,14 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.annotations.NotNull;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -87,7 +92,26 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NotNull Place place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+
+
+            @Override
+            public void onError(@NotNull Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
         //
         // PASTE THE LINES BELOW THIS COMMENT
         //
@@ -96,7 +120,6 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
         setSupportActionBar(toolbar);
 
         // Set up the views
-        lstPlaces = (ListView) findViewById(R.id.listPlaces);
 
         // Initialize the Places client
         String apiKey = getString(R.string.google_maps_key);
@@ -296,7 +319,7 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
 
                             // COMMENTED OUT UNTIL WE DEFINE THE METHOD
                             // Populate the ListView
-                             fillPlacesList();
+                            // fillPlacesList();
                         } else {
                             Exception exception = task.getException();
                             if (exception instanceof ApiException) {
@@ -378,32 +401,10 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
             getLocationPermission();
         }
     }
-    private AdapterView.OnItemClickListener listClickedHandler = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            // position will give us the index of which place was selected in the array
-            LatLng markerLatLng = mLikelyPlaceLatLngs[position];
-            String markerSnippet = mLikelyPlaceAddresses[position];
-            if (mLikelyPlaceAttributions[position] != null) {
-                markerSnippet = markerSnippet + "\n" + mLikelyPlaceAttributions[position];
-            }
 
-            // Add a marker for the selected place, with an info window
-            // showing information about that place.
-            mMap.addMarker(new MarkerOptions()
-                    .title(mLikelyPlaceNames[position])
-                    .position(markerLatLng)
-                    .snippet(markerSnippet).draggable(true));
-
-            // Position the map's camera at the location of the marker.
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(markerLatLng));
-        }
-    };
-    private void fillPlacesList() {
-        // Set up an ArrayAdapter to convert likely places into TextViews to populate the ListView
-        ArrayAdapter<String> placesAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mLikelyPlaceNames);
-        lstPlaces.setAdapter(placesAdapter);
-        lstPlaces.setOnItemClickListener(listClickedHandler);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
-    }
+}
 

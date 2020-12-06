@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.button.MaterialButton;
@@ -15,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class GetInfoStepThree extends AppCompatActivity {
     MaterialButton prevbuttonstep3,nextbuttonstep3;
-    TextInputEditText addr;
+    ImageView addr;
     AutoCompleteTextView city;
     String Addr;
     String Loc;
