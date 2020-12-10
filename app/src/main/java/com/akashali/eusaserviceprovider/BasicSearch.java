@@ -1,28 +1,23 @@
 package com.akashali.eusaserviceprovider;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +44,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     private String Addr;
     private String Loc;
 
+    //Job Alertbox start
+    MaterialCardView current_job_card;
+    //Job Alertbox end
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +68,37 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onResume() {
         super.onResume();
+        current_job_card=findViewById(R.id.current_job_card);
+        current_job_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
+                View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
+                final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
+                final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
+
+                job_alert_dialog.setView(jobView);
+                final AlertDialog alertDialog=job_alert_dialog.create();
+                alertDialog.setCanceledOnTouchOutside(false);
+                accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                reject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
+
+
+
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);

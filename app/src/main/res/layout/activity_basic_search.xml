@@ -13,7 +13,6 @@ tools:context=".BasicSearch">
     android:id="@+id/nav_view"
     app:headerLayout="@layout/header"
     app:menu="@menu/main_menu"
-    android:visibility="gone"
     android:layout_width="300dp"
     android:layout_gravity="start"
     android:layout_height="match_parent"
@@ -155,7 +154,7 @@ tools:context=".BasicSearch">
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card2"
+            android:id="@+id/current_job_card"
             android:layout_width="0dp"
             android:layout_height="170dp"
             android:layout_marginEnd="16dp"

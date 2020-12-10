@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="32dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Job Alert!"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:textColor="@color/BlueColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:text="You are receiving a service booking from"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:textColor="@color/BlueColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/servicebooker"
+        android:text="Akash Ali"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="36sp"
+        android:textColor="@color/BlueColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/booking_reject"
+            android:layout_width="match_parent"
+            android:layout_weight="5"
+            android:layout_height="62dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Reject"
+            android:textColor="@color/white">
+        </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/booking_accept"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_weight="5"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Accept"
+            android:textColor="@color/white">
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+
+
+</LinearLayout>
