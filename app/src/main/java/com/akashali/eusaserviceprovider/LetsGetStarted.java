@@ -18,7 +18,7 @@ public class LetsGetStarted extends AppCompatActivity {
         loginbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LetsGetStarted.this,CurrentJobMap.class);
+                Intent intent=new Intent(LetsGetStarted.this,Login.class);
                 startActivity(intent);
             }
         });
