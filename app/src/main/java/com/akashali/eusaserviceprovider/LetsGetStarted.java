@@ -1,11 +1,11 @@
 package com.akashali.eusaserviceprovider;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LetsGetStarted extends AppCompatActivity {
     Button loginbutton1,signupbutton1;
@@ -18,7 +18,7 @@ public class LetsGetStarted extends AppCompatActivity {
         loginbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LetsGetStarted.this,Login.class);
+                Intent intent=new Intent(LetsGetStarted.this,CurrentJobMap.class);
                 startActivity(intent);
             }
         });

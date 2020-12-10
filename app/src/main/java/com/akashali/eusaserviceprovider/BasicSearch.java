@@ -83,7 +83,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 accept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent=new Intent(BasicSearch.this,CurrentJobMap.class);
+                        startActivity(intent);
                     }
                 });
                 reject.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,5 @@
 package com.akashali.eusaserviceprovider;
 
-import androidx.appcompat.app.AppCompatActivity;
-import java.util.Random;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +7,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Random;
 
 public class GetInfoStepFour extends AppCompatActivity {
     MaterialButton prevbuttonstep4,donebuttonstep4;
@@ -66,7 +67,7 @@ public class GetInfoStepFour extends AppCompatActivity {
 
 
 
-                Contact newSP = new Contact(loc,cnic,fname,lname,phno,email,addr,city,Type,rat,prat);
+                Contact newSP = new Contact(loc,cnic,fname,lname,phno,email,addr,city,Type,rat,prat,mAuth.getInstance().getCurrentUser().getUid());
                 myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
                 myref.setValue(newSP);
 

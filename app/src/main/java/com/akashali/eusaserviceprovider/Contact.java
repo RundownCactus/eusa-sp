@@ -1,8 +1,7 @@
 package com.akashali.eusaserviceprovider;
 
-import android.graphics.Bitmap;
-
 public class Contact {
+    private String uid;
     private String loc;
     private String fname;
     private String lname;
@@ -17,6 +16,14 @@ public class Contact {
 
     public String getCnic() {
         return cnic;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setCnic(String cnic) {
@@ -59,7 +66,7 @@ public class Contact {
         this.pricerat = pricerat;
     }
 
-    public Contact(String loc,String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat) {
+    public Contact(String loc,String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat,String uid) {
         this.loc = loc;
         this.fname = fname;
         this.lname = lname;
@@ -71,6 +78,7 @@ public class Contact {
         this.cnic = cnic;
         this.rating = rating;
         this.pricerat = pricerat;
+        this.uid=uid;
     }
 
     public void setLname(String lname) {

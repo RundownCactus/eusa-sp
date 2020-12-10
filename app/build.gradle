@@ -3,9 +3,10 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         applicationId "com.akashali.eusaserviceprovider"
         minSdkVersion 16
@@ -15,11 +16,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -30,7 +36,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.android.support:multidex:1.0.3'
+    //noinspection GradleDynamicVersion
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps:google-maps-services:0.15.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
     implementation 'androidx.navigation:navigation-fragment:2.3.2'
     implementation 'androidx.navigation:navigation-ui:2.3.2'
     testImplementation 'junit:junit:4.13.1'
