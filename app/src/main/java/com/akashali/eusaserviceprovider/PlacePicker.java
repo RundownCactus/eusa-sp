@@ -95,7 +95,7 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG,Place.Field.ID, Place.Field.NAME));
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -103,6 +103,11 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
             public void onPlaceSelected(@NotNull Place place) {
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                setloc(place.getLatLng());
+                marker.setPosition(place.getLatLng());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(place.getLatLng().latitude,
+                                place.getLatLng().longitude), DEFAULT_ZOOM));
             }
 
 
@@ -181,15 +186,15 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
                 // COMMENTED OUT UNTIL WE DEFINE THE METHOD
                 // Present the current place picker
                 // pickCurrentPlace();
-                Log.d(TAG, "setloc: "+marker.getPosition().latitude);
-                Log.d(TAG, "setloc: "+marker.getPosition().longitude);
-                String addr = getAddress(marker.getPosition().latitude,marker.getPosition().longitude);
+                Log.d(TAG, "setloc: "+mLoc.latitude);
+                Log.d(TAG, "setloc: "+mLoc.longitude);
+                String addr = getAddress(mLoc.latitude,mLoc.longitude);
                 Log.d(TAG, "onOptionsItemSelected: " +addr);
                 String temp = "";
                 temp += marker.getPosition().latitude;
                 temp+=",";
                 temp+= marker.getPosition().longitude;
-                Log.d("ARAY", temp);
+                Log.d("ARAY", addr);
                 Intent intent=new Intent();
                 intent.putExtra("loc",temp);
                 intent.putExtra("addr",addr);
@@ -211,8 +216,10 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                result.append(address.getLocality()).append("\n");
+                result.append(address.getAddressLine(0));
+                result.append(address.getLocality()).append(",");
                 result.append(address.getCountryName());
+
             }
         } catch (IOException e) {
             Log.e("tag", e.getMessage());
@@ -254,82 +261,6 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
             }
         }
     }
-
-    private void getCurrentPlaceLikelihoods() {
-        // Use fields to define the data types to return.
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
-                Place.Field.LAT_LNG);
-
-        // Get the likely places - that is, the businesses and other points of interest that
-        // are the best match for the device's current location.
-        @SuppressWarnings("MissingPermission") final FindCurrentPlaceRequest request =
-                FindCurrentPlaceRequest.builder(placeFields).build();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Task<FindCurrentPlaceResponse> placeResponse = mPlacesClient.findCurrentPlace(request);
-        placeResponse.addOnCompleteListener(this,
-                new OnCompleteListener<FindCurrentPlaceResponse>() {
-                    @Override
-                    public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-                        if (task.isSuccessful()) {
-                            FindCurrentPlaceResponse response = task.getResult();
-                            // Set the count, handling cases where less than 5 entries are returned.
-                            int count;
-                            if (response.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
-                                count = response.getPlaceLikelihoods().size();
-                            } else {
-                                count = M_MAX_ENTRIES;
-                            }
-
-                            int i = 0;
-                            mLikelyPlaceNames = new String[count];
-                            mLikelyPlaceAddresses = new String[count];
-                            mLikelyPlaceAttributions = new String[count];
-                            mLikelyPlaceLatLngs = new LatLng[count];
-
-                            for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
-                                Place currPlace = placeLikelihood.getPlace();
-                                mLikelyPlaceNames[i] = currPlace.getName();
-                                mLikelyPlaceAddresses[i] = currPlace.getAddress();
-                                mLikelyPlaceAttributions[i] = (currPlace.getAttributions() == null) ?
-                                        null : TextUtils.join(" ", currPlace.getAttributions());
-                                mLikelyPlaceLatLngs[i] = currPlace.getLatLng();
-
-                                String currLatLng = (mLikelyPlaceLatLngs[i] == null) ?
-                                        "" : mLikelyPlaceLatLngs[i].toString();
-
-                                Log.i(TAG, String.format("Place " + currPlace.getName()
-                                        + " has likelihood: " + placeLikelihood.getLikelihood()
-                                        + " at " + currLatLng));
-
-                                i++;
-                                if (i > (count - 1)) {
-                                    break;
-                                }
-                            }
-
-
-                            // COMMENTED OUT UNTIL WE DEFINE THE METHOD
-                            // Populate the ListView
-                            // fillPlacesList();
-                        } else {
-                            Exception exception = task.getException();
-                            if (exception instanceof ApiException) {
-                                ApiException apiException = (ApiException) exception;
-                                Log.e(TAG, "Place not found: " + apiException.getStatusCode());
-                            }
-                        }
-                    }
-                });
-    }
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare
@@ -344,18 +275,23 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
-                            Log.d(TAG, "Latitude: " + mLastKnownLocation.getLatitude());
-                            Log.d(TAG, "Longitude: " + mLastKnownLocation.getLongitude());
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(mLastKnownLocation.getLatitude(),
-                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            marker = mMap.addMarker(new MarkerOptions()
-                                    .title("YOUR LOCATION")
-                                    .position(new LatLng(mLastKnownLocation.getLatitude(),
-                                            mLastKnownLocation.getLongitude()))
-                                    .snippet(getString(R.string.default_info_snippet))
-                                    .draggable(true));
+                            if(mLastKnownLocation != null){
+                                Log.d(TAG, "Latitude: " + mLastKnownLocation.getLatitude());
+                                Log.d(TAG, "Longitude: " + mLastKnownLocation.getLongitude());
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(mLastKnownLocation.getLatitude(),
+                                                mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                marker = mMap.addMarker(new MarkerOptions()
+                                        .title("YOUR LOCATION")
+                                        .position(new LatLng(mLastKnownLocation.getLatitude(),
+                                                mLastKnownLocation.getLongitude()))
+                                        .snippet(getString(R.string.default_info_snippet))
+                                        .draggable(true));
 
+                            }
+                            else{
+
+                            }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
@@ -364,7 +300,6 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
 
                         }
 
-                        getCurrentPlaceLikelihoods();
                     }
                 });
             }

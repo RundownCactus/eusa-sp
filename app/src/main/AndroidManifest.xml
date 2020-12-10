@@ -63,7 +63,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAYE1QHGlPnjvJUxCqqJMQjfkPzN2mCVSQ" />
+            android:value="AIzaSyCHs5WcO_oaedJIRP3zzJqxHpYWIq5lwes" />
     </application>
     <uses-feature
         android:name="android.hardware.location.network"

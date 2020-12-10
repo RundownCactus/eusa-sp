@@ -85,11 +85,12 @@ public class GetInfoStepThree extends AppCompatActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==2)
+        if(requestCode==2 && data != null)
         {
-            Addr = data.getStringExtra("addr");
-            Loc = data.getStringExtra("loc");
 
+                Addr = data.getStringExtra("addr");
+                Loc = data.getStringExtra("loc");
+                Log.d("BC", Addr);
         }
     }
 }
