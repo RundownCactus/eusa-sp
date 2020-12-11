@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BasicSearch extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -39,10 +42,11 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     ImageView profileImage,picker;
     List<Contact> contacts;
     FirebaseDatabase rootnode;
-    DatabaseReference myref;
+    DatabaseReference myref,jobref;
     private FirebaseAuth mAuth;
     private String Addr;
     private String Loc;
+    TextView name;
 
     //Job Alertbox start
     MaterialCardView current_job_card;
@@ -58,6 +62,70 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         toolbar=findViewById(R.id.toolbar);
         mainmenu=findViewById(R.id.mainmenu);
 
+
+
+        jobref = FirebaseDatabase.getInstance().getReference().child("Jobs");
+        jobref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               CheckJobs(snapshot);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void CheckJobs(DataSnapshot snapshot) {
+
+        Log.d("TAG",snapshot.getValue().toString());
+        Log.d("TAG", ""+snapshot.getChildrenCount());
+        for (DataSnapshot jobs : snapshot.getChildren()) {
+            if(jobs.child("spid").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())){
+                DatabaseReference uref = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(jobs.child("uid").getValue().toString());
+                uref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        SendRequest(snapshot);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }
+    }
+
+    private void SendRequest(DataSnapshot snapshot) {
+        final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
+        View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
+        final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
+        final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
+
+        job_alert_dialog.setView(jobView);
+        final AlertDialog alertDialog=job_alert_dialog.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        name = jobView.findViewById(R.id.servicebooker);
+        name.setText(snapshot.child("fname").getValue().toString() + snapshot.child("lname").getValue().toString() );
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BasicSearch.this,CurrentJobMap.class);
+                startActivity(intent);
+            }
+        });
+        reject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -111,6 +179,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         profileImage=(ImageView) header.findViewById(R.id.circleImageView);
         rootnode = FirebaseDatabase.getInstance();
         myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
+
         Log.d("BC", mAuth.getInstance().getCurrentUser().getUid());
         myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
