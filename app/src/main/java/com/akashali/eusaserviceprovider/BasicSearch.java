@@ -26,7 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class BasicSearch extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +46,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     private String Addr;
     private String Loc;
     TextView name;
+
 
     //Job Alertbox start
     MaterialCardView current_job_card;
@@ -88,8 +91,50 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                     uref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            SendRequest(snapshot);
-                            //Log.d("TAG",snapshot.getValue().toString());
+                            //SendRequest(snapshot);
+                            //Log.d("TAG",jobs.getKey());
+                            final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
+                            View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
+                            final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
+                            final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
+
+                            job_alert_dialog.setView(jobView);
+                            final AlertDialog alertDialog=job_alert_dialog.create();
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            name = jobView.findViewById(R.id.servicebooker);
+                            name.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString() );
+                            DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("status");
+                            DatabaseReference jobAcceptTime=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("jobAcceptTime");
+                            DatabaseReference jobRejectTime=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("jobRejectTime");
+                            accept.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String jobAcceptTime1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                                    ref.setValue("Accept");
+                                    jobAcceptTime.setValue(jobAcceptTime1);
+                                    Intent intent=new Intent(BasicSearch.this,CurrentJobMap.class);
+                                    intent.putExtra("spid",jobs.child("spid").getValue().toString());
+                                    intent.putExtra("uid",jobs.child("uid").getValue().toString());
+                                    intent.putExtra("key",jobs.getKey());
+                                    intent.putExtra("userLatLng",jobs.child("userLatLng").getValue().toString());
+                                    alertDialog.dismiss();
+                                    startActivity(intent);
+                                }
+                            });
+                            reject.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //String jobARejectTime1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                                    //jobRejectTime.setValue(jobARejectTime1);
+                                    ref.setValue("Job Rejected by SP");
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            if(jobs.child("status").getValue().toString().equals("New"))
+                            {
+                                alertDialog.show();
+                            }
+
                         }
 
                         @Override
@@ -97,38 +142,12 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
                         }
                     });
+
                 }
             }
         }
     }
 
-    private void SendRequest(DataSnapshot snapshot) {
-        final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
-        View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
-        final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
-        final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
-
-        job_alert_dialog.setView(jobView);
-        final AlertDialog alertDialog=job_alert_dialog.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        name = jobView.findViewById(R.id.servicebooker);
-        name.setText(snapshot.child("fname").getValue().toString() + snapshot.child("lname").getValue().toString() );
-
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(BasicSearch.this,CurrentJobMap.class);
-                startActivity(intent);
-            }
-        });
-        reject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog.show();
-    }
 
     @Override
     protected void onStart() {
@@ -142,28 +161,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         current_job_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
-                View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
-                final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
-                final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
 
-                job_alert_dialog.setView(jobView);
-                final AlertDialog alertDialog=job_alert_dialog.create();
-                alertDialog.setCanceledOnTouchOutside(false);
-                accept.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(BasicSearch.this,CurrentJobMap.class);
-                        startActivity(intent);
-                    }
-                });
-                reject.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog.show();
             }
         });
 

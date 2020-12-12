@@ -2,6 +2,7 @@ package com.akashali.eusaserviceprovider;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,13 +12,18 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -34,6 +40,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
@@ -42,7 +54,9 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener,
@@ -53,14 +67,161 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     private LocationManager locationManager;
     private static final long MIN_TIME = 400;
     private static final float MIN_DISTANCE = 1000;
-    private LatLng latLng;
+    private LatLng latLng,bookerLatLng;
     private GeoApiContext mGeoApiContext=null;
     //GOOGLE MAPS VARIABLES END
-
+    String spid,uid,key,userLatLng,userphno;
+    Double lat,lon;
+    DatabaseReference myref,userref;
+    String spLatLngStart;
+    TextView currentjobuserfullname;
+    ImageView currentjobusercall;
+    MaterialButton booking_complete;
+    String userrating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_job_map);
+        currentjobuserfullname=findViewById(R.id.currentjobuserfullname);
+        currentjobusercall=findViewById(R.id.currentjobusercall);
+        booking_complete=findViewById(R.id.booking_complete);
+        spid = getIntent().getStringExtra("spid");
+        uid = getIntent().getStringExtra("uid");
+        key = getIntent().getStringExtra("key");
+        userLatLng=getIntent().getStringExtra("userLatLng");
+        String [] loc = userLatLng.split(",",2);
+        lat = Double.parseDouble(loc[0]);
+        lon = Double.parseDouble(loc[1]);
+        Log.d("TAGAR",spid);
+        Log.d("TAGAR",uid);
+        Log.d("TAGAR",key);
+        Log.d("TAGAR",userLatLng);
+        booking_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
+                //comref.setValue("Complete");
+                final AlertDialog.Builder job_complete_alert_dialog=new AlertDialog.Builder(CurrentJobMap.this);
+                View jobCompleteView=getLayoutInflater().inflate(R.layout.job_complete_dialog_box,null);
+                final MaterialButton back=(MaterialButton)jobCompleteView.findViewById(R.id.booking_back);
+                final MaterialButton complete=(MaterialButton)jobCompleteView.findViewById(R.id.booking_complete);
+
+                final ImageView oneStar=(ImageView)jobCompleteView.findViewById(R.id.onestar);
+                final ImageView twoStar=(ImageView)jobCompleteView.findViewById(R.id.twostar);
+                final ImageView threeStar=(ImageView)jobCompleteView.findViewById(R.id.threestar);
+                final ImageView fourStar=(ImageView)jobCompleteView.findViewById(R.id.fourstar);
+                final ImageView fiveStar=(ImageView)jobCompleteView.findViewById(R.id.fivestar);
+                userrating="0";
+                oneStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        twoStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        userrating="1";
+                    }
+                });
+                twoStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        userrating="2";
+                    }
+                });
+                threeStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        userrating="3";
+                    }
+                });
+                fourStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                        userrating="4";
+                    }
+                });
+                fiveStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        fiveStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                        userrating="5";
+                    }
+                });
+
+                job_complete_alert_dialog.setView(jobCompleteView);
+                final AlertDialog alertDialog=job_complete_alert_dialog.create();
+                alertDialog.setCanceledOnTouchOutside(false);
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                complete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String jobCompleteTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                        DatabaseReference jobCompleteTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCompletionTime");
+                        jobCompleteTime1.setValue(jobCompleteTime);
+                        DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
+                        comref.setValue("Complete");
+                        DatabaseReference ratref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobUserRating");
+                        ratref.setValue(userrating);
+                        Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
+        userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
+        userref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentjobuserfullname.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString());
+                userphno=snapshot.child("phone").getValue().toString();
+                currentjobusercall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri u = Uri.parse("tel:" + userphno);
+                        Intent i = new Intent(Intent.ACTION_DIAL, u);
+                        try {
+                            startActivity(i);
+                        } catch (SecurityException s) {
+                            Toast.makeText(CurrentJobMap.this, "An error occurred", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -93,8 +254,8 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         directions.alternatives(true);
         directions.origin(
                 new com.google.maps.model.LatLng(
-                        33.120721,
-                        73.878894
+                        latLng.latitude,
+                        latLng.longitude
                 )
         );
         Log.d("nope", "calculateDirections: destination: " + destination.toString());
@@ -157,8 +318,8 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
         getPermission();
 
-        LatLng myLocation = new LatLng(33.112859, 73.855685);
-        Marker marker=mMap.addMarker(new MarkerOptions().position(myLocation).title("My Location"));
+        LatLng userLocation = new LatLng(lat, lon);
+        Marker marker=mMap.addMarker(new MarkerOptions().position(userLocation).title("User Location").icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_usermappinicon)));
         mMap.setOnInfoWindowClickListener(this);
 
         // LatLng Pakistan = null;
@@ -174,6 +335,12 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                 mMap.animateCamera(cameraUpdate);
                 calculateDirections(marker);
+                spLatLngStart="";
+                spLatLngStart+=latLng.latitude;
+                spLatLngStart+=",";
+                spLatLngStart+=latLng.longitude;
+                myref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("spLatlngStart");
+                myref.setValue(spLatLngStart);
                 // Add a marker in Sydney and move the camera
                 //CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
                 //LatLng myLocation = new LatLng(33.699989, 73.001916);
