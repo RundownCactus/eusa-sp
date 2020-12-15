@@ -181,10 +181,10 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     @Override
                     public void onClick(View view) {
                         String jobCompleteTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-                        DatabaseReference jobCompleteTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCompletionTime");
-                        jobCompleteTime1.setValue(jobCompleteTime);
                         DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
                         comref.setValue("Complete");
+                        DatabaseReference jobCompleteTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCompletionTime");
+                        jobCompleteTime1.setValue(jobCompleteTime);
                         DatabaseReference ratref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobUserRating");
                         ratref.setValue(userrating);
                         Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
