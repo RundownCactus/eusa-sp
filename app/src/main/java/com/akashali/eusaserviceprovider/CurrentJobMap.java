@@ -72,11 +72,11 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     //GOOGLE MAPS VARIABLES END
     String spid,uid,key,userLatLng,userphno;
     Double lat,lon;
-    DatabaseReference myref,userref;
+    DatabaseReference myref,userref,jobcancelref,jobref;
     String spLatLngStart;
     TextView currentjobuserfullname;
     ImageView currentjobusercall;
-    MaterialButton booking_complete;
+    MaterialButton booking_complete,booking_cancel1;
     String userrating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         currentjobuserfullname=findViewById(R.id.currentjobuserfullname);
         currentjobusercall=findViewById(R.id.currentjobusercall);
         booking_complete=findViewById(R.id.booking_complete);
+        booking_cancel1=findViewById(R.id.booking_cancel1);
         spid = getIntent().getStringExtra("spid");
         uid = getIntent().getStringExtra("uid");
         key = getIntent().getStringExtra("key");
@@ -96,6 +97,36 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         Log.d("TAGAR",uid);
         Log.d("TAGAR",key);
         Log.d("TAGAR",userLatLng);
+        booking_cancel1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String jobCancelTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                DatabaseReference jobCancelTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCancelTime");
+                jobCancelTime1.setValue(jobCancelTime);
+                jobcancelref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
+                jobcancelref.setValue("Cancel by SP");
+                Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        jobref= FirebaseDatabase.getInstance().getReference().child("Jobs").child(key);
+        jobref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("status").getValue().toString().equals("Cancel by user after accept") && !(snapshot.child("jobCancelTime").getValue().toString().equals("")))
+                {
+                    Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         booking_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -46,6 +47,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     private String Addr;
     private String Loc;
     TextView name;
+    String key;
 
 
     //Job Alertbox start
@@ -81,10 +83,17 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
     private void CheckJobs(DataSnapshot snapshot) {
 
-        Log.d("TAG",snapshot.getValue().toString());
-        Log.d("TAG", ""+snapshot.getChildrenCount());
+
         for (DataSnapshot jobs : snapshot.getChildren()) {
             if(jobs.child("spid").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())){
+
+                final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
+                View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
+                final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
+                final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
+                job_alert_dialog.setView(jobView);
+                final AlertDialog alertDialog=job_alert_dialog.create();
+
                 if(jobs.child("status").getValue().toString().equals("New"))
                 {
                     DatabaseReference uref = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(jobs.child("uid").getValue().toString());
@@ -93,13 +102,6 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             //SendRequest(snapshot);
                             //Log.d("TAG",jobs.getKey());
-                            final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
-                            View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
-                            final MaterialButton reject=(MaterialButton)jobView.findViewById(R.id.booking_reject);
-                            final MaterialButton accept=(MaterialButton)jobView.findViewById(R.id.booking_accept);
-
-                            job_alert_dialog.setView(jobView);
-                            final AlertDialog alertDialog=job_alert_dialog.create();
                             alertDialog.setCanceledOnTouchOutside(false);
                             name = jobView.findViewById(R.id.servicebooker);
                             name.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString() );
@@ -116,6 +118,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     intent.putExtra("spid",jobs.child("spid").getValue().toString());
                                     intent.putExtra("uid",jobs.child("uid").getValue().toString());
                                     intent.putExtra("key",jobs.getKey());
+                                    key=jobs.getKey();
                                     intent.putExtra("userLatLng",jobs.child("userLatLng").getValue().toString());
                                     alertDialog.dismiss();
                                     startActivity(intent);
@@ -133,6 +136,22 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                             if(jobs.child("status").getValue().toString().equals("New"))
                             {
                                 alertDialog.show();
+                                DatabaseReference jobcancelref = FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey());
+                                jobcancelref.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.child("status").getValue().toString().equals("Cancel by user"))
+                                        {
+                                            alertDialog.dismiss();
+                                            Toast.makeText(BasicSearch.this,"Job cancelled by user",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
 
                         }
