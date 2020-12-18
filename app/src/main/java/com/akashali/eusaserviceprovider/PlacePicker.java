@@ -6,12 +6,15 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -268,40 +271,56 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
          */
         try {
             if (mLocationPermissionGranted) {
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                LocationListener mLocationListener = new LocationListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            mLastKnownLocation = task.getResult();
-                            if(mLastKnownLocation != null){
-                                Log.d(TAG, "Latitude: " + mLastKnownLocation.getLatitude());
-                                Log.d(TAG, "Longitude: " + mLastKnownLocation.getLongitude());
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                                marker = mMap.addMarker(new MarkerOptions()
-                                        .title("YOUR LOCATION")
-                                        .position(new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude()))
-                                        .snippet(getString(R.string.default_info_snippet))
-                                        .draggable(true));
+                    public void onLocationChanged(@NonNull Location location) {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(location.getLatitude(),
+                                        location.getLongitude()), DEFAULT_ZOOM));
+                        marker = mMap.addMarker(new MarkerOptions()
+                                .title("YOUR LOCATION")
+                                .position(new LatLng(location.getLatitude(),
+                                        location.getLongitude()))
+                                .snippet(getString(R.string.default_info_snippet))
+                                .draggable(true));
 
-                            }
-                            else{
+                        // Add a marker in Sydney and move the camera
+                        //CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+                        //LatLng myLocation = new LatLng(33.699989, 73.001916);
+                        //mMap.addMarker(new MarkerOptions().position(myLocation).title("My Location"));
+                        //mMap.moveCamera(CameraUpdateFactory.newLatLng());
+                        //mMap.animateCamera(zoom);
+                    }
 
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
 
-                        }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
 
                     }
-                });
+
+                    @Override
+                    public void onProviderEnabled(@NonNull String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(@NonNull String provider) {
+
+                    }
+                };
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 100, mLocationListener);
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
