@@ -120,6 +120,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     intent.putExtra("key",jobs.getKey());
                                     key=jobs.getKey();
                                     intent.putExtra("userLatLng",jobs.child("userLatLng").getValue().toString());
+                                    myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
+                                    myref.child("Jobs").child(key).setValue("true");
                                     alertDialog.dismiss();
                                     startActivity(intent);
                                 }
@@ -130,6 +132,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     //String jobARejectTime1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                                     //jobRejectTime.setValue(jobARejectTime1);
                                     ref.setValue("Job Rejected by SP");
+                                    myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
+                                    myref.child("Jobs").child(key).setValue("rejected");
                                     alertDialog.dismiss();
                                 }
                             });
