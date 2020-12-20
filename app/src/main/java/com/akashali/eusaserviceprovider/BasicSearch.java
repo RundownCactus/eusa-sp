@@ -131,6 +131,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                 public void onClick(View view) {
                                     //String jobARejectTime1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                                     //jobRejectTime.setValue(jobARejectTime1);
+                                    key=jobs.getKey();
                                     ref.setValue("Job Rejected by SP");
                                     myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
                                     myref.child("Jobs").child(key).setValue("rejected");
