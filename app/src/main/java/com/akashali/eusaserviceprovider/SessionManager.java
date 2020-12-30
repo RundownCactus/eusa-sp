@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+//CLASS TO MAINTAIN SESSION DATA FOR USER
 
 public class SessionManager {
     SharedPreferences userSession;

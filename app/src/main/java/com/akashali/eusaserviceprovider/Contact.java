@@ -1,6 +1,11 @@
 package com.akashali.eusaserviceprovider;
 
+//DATA CLASS TO HOLD SERVICE PROVIDERS
+
 public class Contact {
+
+    // DATA FIELDS (CAN BE MODIFIED) == CHECK ACCESSOR WHERE INSTANCE IS CREATED TO CORRECTLY MODIFY
+
     private String uid;
     private String loc;
     private String fname;

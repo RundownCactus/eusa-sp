@@ -14,6 +14,8 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+//SIGN UP STEP 3
+
 public class GetInfoStepThree extends AppCompatActivity {
     MaterialButton prevbuttonstep3,nextbuttonstep3;
     ImageView addr;
@@ -28,6 +30,8 @@ public class GetInfoStepThree extends AppCompatActivity {
         addr = findViewById(R.id.getaddress);
         prevbuttonstep3=findViewById(R.id.prevbuttonstep3);
         nextbuttonstep3=findViewById(R.id.nextbuttonstep3);
+
+        //INITLIATING MAP API TO GET LOCATION FROM MAP
         Places.initialize(getApplicationContext(),"AIzaSyAYE1QHGlPnjvJUxCqqJMQjfkPzN2mCVSQ");
 
         addr.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +50,9 @@ public class GetInfoStepThree extends AppCompatActivity {
         nextbuttonstep3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //TRANSFERRING ALL DATA TO NEXT STEP
+
                 String fname = getIntent().getStringExtra("fname");
                 String lname = getIntent().getStringExtra("lname");
                 String email = getIntent().getStringExtra("email");
@@ -80,6 +87,7 @@ public class GetInfoStepThree extends AppCompatActivity {
         cityAutoCompleteTextView.setAdapter(newAdapter);
     }
 
+    //ACTIVITY RESULT FOR PLACE PICKER ACITIVTY
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

@@ -10,6 +10,8 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+//SIGN UP STEP 1
+
 public class GetInfoStepOne extends AppCompatActivity {
     MaterialButton nextbuttonstep1;
     TextInputEditText fname,lname;
@@ -26,6 +28,9 @@ public class GetInfoStepOne extends AppCompatActivity {
                 if(!validateLname() | !validateFname()){
                     return;
                 }
+
+                //GET INFO AND TRANSFER TO NEXT STEP
+
                 String first = fname.getText().toString();
                 String last = lname.getText().toString();
                 String phno = getIntent().getStringExtra("phno");
@@ -39,7 +44,7 @@ public class GetInfoStepOne extends AppCompatActivity {
         });
     }
 
-
+    //VALIDATION FUNCTIONS
     private boolean validateFname(){
         String fn = fname.getText().toString();
         String nowhitespace = "(?=\\s+$)";

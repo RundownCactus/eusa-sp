@@ -46,32 +46,9 @@ public class Login extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        /*userlogin=findViewById(R.id.userlogin);
-        textViewSignup1=findViewById(R.id.textViewSignup1);
-        imageViewBackArrow1=findViewById(R.id.imageViewBackArrow1);
-        userlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(Login.this,BasicSearch.class);
-                startActivity(intent);
-            }
-        });
-
-        textViewSignup1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(Login.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        imageViewBackArrow1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });*/
     }
+
+    //VALID FUNCTIONS
 
     private boolean validatePhno(){
         String ph = phno.getText().toString();

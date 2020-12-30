@@ -56,7 +56,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
+//ACTIVITY TO PICK LOCATION FROM MAP AND RETURN AN ADDRESS
 public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapsActivity";
@@ -120,9 +120,6 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
-        //
-        // PASTE THE LINES BELOW THIS COMMENT
-        //
 
         // Set up the action toolbar
         setSupportActionBar(toolbar);
@@ -186,9 +183,7 @@ public class PlacePicker extends AppCompatActivity implements OnMapReadyCallback
         switch (item.getItemId()) {
             case R.id.action_geolocate:
 
-                // COMMENTED OUT UNTIL WE DEFINE THE METHOD
                 // Present the current place picker
-                // pickCurrentPlace();
                 Log.d(TAG, "setloc: "+mLoc.latitude);
                 Log.d(TAG, "setloc: "+mLoc.longitude);
                 String addr = getAddress(mLoc.latitude,mLoc.longitude);

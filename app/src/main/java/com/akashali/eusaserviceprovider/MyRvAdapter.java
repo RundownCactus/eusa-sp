@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+//ADAPTER FOR SERVICE PROVIDER LIST VIEW
+
 public class MyRvAdapter extends RecyclerView.Adapter<MyRvAdapter.MyViewHolder> {
     List<Contact> newList;
     Context c;

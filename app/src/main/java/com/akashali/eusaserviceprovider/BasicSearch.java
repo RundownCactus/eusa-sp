@@ -70,6 +70,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         jobref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //Checks To See If a Job Request is made
                CheckJobs(snapshot);
 
             }
@@ -83,9 +84,11 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
     private void CheckJobs(DataSnapshot snapshot) {
 
-
+        //Traverses Through Firebase Database to find a Job in Current Users Name
         for (DataSnapshot jobs : snapshot.getChildren()) {
             if(jobs.child("spid").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())){
+
+                //Make The Alert
 
                 final AlertDialog.Builder job_alert_dialog=new AlertDialog.Builder(BasicSearch.this);
                 View jobView=getLayoutInflater().inflate(R.layout.job_receive_dialog_box,null);
@@ -94,6 +97,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 job_alert_dialog.setView(jobView);
                 final AlertDialog alertDialog=job_alert_dialog.create();
 
+                //Extra Functions with Job Status
                 if(jobs.child("status").getValue().toString().equals("New"))
                 {
                     DatabaseReference uref = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(jobs.child("uid").getValue().toString());
@@ -108,6 +112,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                             DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("status");
                             DatabaseReference jobAcceptTime=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("jobAcceptTime");
                             DatabaseReference jobRejectTime=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("jobRejectTime");
+
+                            //JOB ACCEPTED ACTIONS
+
                             accept.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -126,6 +133,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     startActivity(intent);
                                 }
                             });
+
+                            //JOB REJECTED ACTIONS
+
                             reject.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -138,6 +148,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     alertDialog.dismiss();
                                 }
                             });
+
+                            //CHECK IF USER CANCELLED
+
                             if(jobs.child("status").getValue().toString().equals("New"))
                             {
                                 alertDialog.show();
@@ -190,13 +203,15 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         });
 
 
-
+        //NAV BAR STARTED IN ON RESUME
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Updating The Nav Bar According to User
 
         View header = navigationView.getHeaderView(0);
         text = (TextView) header.findViewById(R.id.username);
@@ -246,7 +261,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+        //NAV BAR SELECTION
         switch (item.getItemId()){
             case R.id.nav_history:
                 Intent intent=new Intent(BasicSearch.this,History.class);

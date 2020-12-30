@@ -9,6 +9,8 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+//SIGN UP VERIFY PHONE ACITIVITY
+
 public class ServiceProviderPhoneVerification extends AppCompatActivity {
     MaterialButton sendverificationcode;
     TextInputEditText phno;
@@ -32,6 +34,7 @@ public class ServiceProviderPhoneVerification extends AppCompatActivity {
             }
         });
     }
+
     private boolean validatePhno(){
         String ph = phno.getText().toString();
         String nowhitespace = "(?=\\s+$)";

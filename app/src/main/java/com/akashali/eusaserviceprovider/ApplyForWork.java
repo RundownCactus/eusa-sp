@@ -25,6 +25,8 @@ public class ApplyForWork extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        // Current Work Types Integrated With Our System
         String[] workType = new String[] {"Plumber", "Electrician", "Carpenter", "Cleaner","Mechanic"};
 
         ArrayAdapter adapter =

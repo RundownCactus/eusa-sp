@@ -23,6 +23,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+//RECIEVE CODE ACITIVTY
+
 public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
     String verCode;
     String phno;
@@ -50,6 +52,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
                   CodeByUser.requestFocus();
                   return;
               }
+              //VERIFY IF CODE IS CORRECT
               verifyCode(code);
           }
         });
@@ -60,7 +63,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
             }
         });
     }
-
+    //SENDING CODE TO USER USING FIREBASE FUNCTIONALITY
     private void sendCode(String phno) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+92" + phno,        // Phone number to verify
@@ -94,6 +97,7 @@ public class ServiceProviderReceiveVerificationCode extends AppCompatActivity {
 
     private void verifyCode(String code) {
         PhoneAuthCredential cred = PhoneAuthProvider.getCredential(verCode,code);
+        //SIGN IN IF CODE IS CORRECT
         signIn(cred);
     }
 

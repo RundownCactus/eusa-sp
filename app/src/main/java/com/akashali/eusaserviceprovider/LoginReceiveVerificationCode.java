@@ -36,6 +36,8 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
         setContentView(R.layout.activity_login_receive_verification_code);
         CodeByUser=findViewById(R.id.verificationcode);
         phno = getIntent().getStringExtra("phno");
+
+        //FUNCTION TO SEND CODE TO USER PHONE
         sendCode(phno);
 
         loginverifybackbutton=findViewById(R.id.loginverifybackbutton);
@@ -49,6 +51,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
                     CodeByUser.requestFocus();
                     return;
                 }
+                //FUNCTION TO SEE IF CODE ENTERED BY USER IS CORRECT
                 verifyCode(code);
 
             }
@@ -61,6 +64,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
         });
     }
 
+    //FIREBASE FUNCTIONALITY
     private void sendCode(String phno) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+92" + phno,        // Phone number to verify
@@ -69,8 +73,8 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
                 TaskExecutors.MAIN_THREAD,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
     }
+    //GETTING CODE
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
@@ -81,6 +85,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
             String code = phoneAuthCredential.getSmsCode();
             if(code != null){
+                //FUNCTION TO SEE IF CODE IS CORRECT
                 verifyCode(code);
             }
         }
@@ -93,6 +98,7 @@ public class LoginReceiveVerificationCode extends AppCompatActivity {
 
     private void verifyCode(String code) {
         PhoneAuthCredential cred = PhoneAuthProvider.getCredential(verCode,code);
+        //SIGN IN IF CODE IS CORRECT
         signIn(cred);
     }
 

@@ -10,6 +10,8 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+//SIGN UP STEP 2
+
 public class GetInfoStepTwo extends AppCompatActivity {
     MaterialButton prevbuttonstep2,nextbuttonstep2;
     TextInputEditText email,cnic;
@@ -34,6 +36,8 @@ public class GetInfoStepTwo extends AppCompatActivity {
                 if(!validateEmail() | !validateCnic()){
                     return;
                 }
+
+                //TRANSFERRING DATA TO NEXT STEP
                 String fname = getIntent().getStringExtra("fname");
                 String lname = getIntent().getStringExtra("lname");
                 String phno = getIntent().getStringExtra("phno");
@@ -51,6 +55,7 @@ public class GetInfoStepTwo extends AppCompatActivity {
         });
     }
 
+    //VALID FUNCTIONS
     private boolean validateCnic(){
         String Cnic = cnic.getText().toString();
 

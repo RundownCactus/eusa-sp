@@ -82,6 +82,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_job_map);
+
+        //Init MAP/POP UP variables
+
         currentjobuserfullname=findViewById(R.id.currentjobuserfullname);
         currentjobusercall=findViewById(R.id.currentjobusercall);
         booking_complete=findViewById(R.id.booking_complete);
@@ -97,6 +100,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         Log.d("TAGAR",uid);
         Log.d("TAGAR",key);
         Log.d("TAGAR",userLatLng);
+
+        //BOOKING CANCELLED BY SERVICE PROVIDER
+
         booking_cancel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +137,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 //DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
-                //comref.setValue("Complete");
+
+                //SETTING JOB COMPLETION VARIABLES
+
                 final AlertDialog.Builder job_complete_alert_dialog=new AlertDialog.Builder(CurrentJobMap.this);
                 View jobCompleteView=getLayoutInflater().inflate(R.layout.job_complete_dialog_box,null);
                 final MaterialButton back=(MaterialButton)jobCompleteView.findViewById(R.id.booking_back);
@@ -142,6 +150,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 final ImageView threeStar=(ImageView)jobCompleteView.findViewById(R.id.threestar);
                 final ImageView fourStar=(ImageView)jobCompleteView.findViewById(R.id.fourstar);
                 final ImageView fiveStar=(ImageView)jobCompleteView.findViewById(R.id.fivestar);
+
+                //RATING MECHANISM
+
                 userrating="0";
                 oneStar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -199,6 +210,8 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     }
                 });
 
+                //CREATING ALERT FOR JOB COMPLETION
+
                 job_complete_alert_dialog.setView(jobCompleteView);
                 final AlertDialog alertDialog=job_complete_alert_dialog.create();
                 alertDialog.setCanceledOnTouchOutside(false);
@@ -211,6 +224,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 complete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        // JOB COMPLETE
+
                         String jobCompleteTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                         DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
                         comref.setValue("Complete");
@@ -236,6 +252,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 currentjobusercall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        //CONTACT USER THROUGH DIALER
+
                         Uri u = Uri.parse("tel:" + userphno);
                         Intent i = new Intent(Intent.ACTION_DIAL, u);
                         try {
@@ -314,6 +333,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     public void onInfoWindowClick(Marker marker) {
 
     }
+
+    //ADDS NAVIGATION LINES TO MAP ACCORDING TO GOOGLE DIRECTIONS
+
     private void addPolylinesToMap(final DirectionsResult result){
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -346,6 +368,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        //INIT MAP VARIABLES
+
         mMap = googleMap;
         getPermission();
 
@@ -397,6 +422,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
 
             }
         };
+
+        //CHECKING PERMISSIONS FOR INTERNET AND GPS
+
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -408,10 +436,14 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        //GETTING LIVE LOCATION
+
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 100, mLocationListener);
     }
 
 
+    //CONVERT VECTOR TO BITMAP
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId)
     {
@@ -423,6 +455,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+    //GETTING PERMISSIONS
+
     private  void getPermission(){
         if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
         {
@@ -432,6 +467,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         }
 
     }
+
     public LatLng getLocationFromAddress(Context context,String strAddress) {
 
         Geocoder coder = new Geocoder(context);
