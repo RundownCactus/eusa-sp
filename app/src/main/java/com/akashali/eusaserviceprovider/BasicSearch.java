@@ -52,11 +52,29 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
     //Job Alertbox start
     MaterialCardView current_job_card;
+    MaterialCardView card4,card1;
+
     //Job Alertbox end
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
+        card1=findViewById(R.id.card1);
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BasicSearch.this,History.class);
+                startActivity(intent);
+            }
+        });
+        card4=findViewById(R.id.card4);
+        card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BasicSearch.this,Settings.class);
+                startActivity(intent);
+            }
+        });
         Log.d("basicsearchCalled", "onCreate Called");
         contacts=new ArrayList<>();
         drawerLayout=findViewById(R.id.drawer_layout);
