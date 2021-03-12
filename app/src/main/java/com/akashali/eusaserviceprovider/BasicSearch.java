@@ -59,7 +59,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
-        card1=findViewById(R.id.card1);
+        /*card1=findViewById(R.id.card1);
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +74,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 Intent intent=new Intent(BasicSearch.this,Settings.class);
                 startActivity(intent);
             }
-        });
+        });*/
         Log.d("basicsearchCalled", "onCreate Called");
         contacts=new ArrayList<>();
         drawerLayout=findViewById(R.id.drawer_layout);
@@ -212,13 +212,6 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onResume() {
         super.onResume();
-        current_job_card=findViewById(R.id.current_job_card);
-        current_job_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
 
         //NAV BAR STARTED IN ON RESUME
