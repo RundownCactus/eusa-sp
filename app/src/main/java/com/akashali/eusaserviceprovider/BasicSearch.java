@@ -42,7 +42,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     ImageView profileImage,picker;
     List<Contact> contacts;
     FirebaseDatabase rootnode;
-    DatabaseReference myref,jobref;
+    DatabaseReference myref,jobref,recentjobref;
     private FirebaseAuth mAuth;
     private String Addr;
     private String Loc;
@@ -54,7 +54,14 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     MaterialCardView current_job_card;
     MaterialCardView card4,card1;
 
+
     //Job Alertbox end
+    //homepage
+    TextView cardUsername;
+    MaterialCardView settings;
+    MaterialCardView promote;
+    MaterialCardView history;
+    MaterialCardView cardrecentjob,cardongoingjob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         navigationView=findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
         mainmenu=findViewById(R.id.mainmenu);
+        settings=findViewById(R.id.settings);
+        promote=findViewById(R.id.promote);
+        history=findViewById(R.id.history);
 
 
 
@@ -226,6 +236,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
         View header = navigationView.getHeaderView(0);
         text = (TextView) header.findViewById(R.id.username);
+        cardUsername=findViewById(R.id.cardUsername);
         profileImage=(ImageView) header.findViewById(R.id.circleImageView);
         rootnode = FirebaseDatabase.getInstance();
         myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
@@ -235,6 +246,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 text.setText(snapshot.child("fname").getValue().toString());
+                cardUsername.setText(snapshot.child("fname").getValue().toString());
             }
 
             @Override
@@ -264,6 +276,27 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BasicSearch.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+        promote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent=new Intent(BasicSearch.this,Settings.class);
+                //startActivity(intent);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BasicSearch.this,History.class);
+                startActivity(intent);
             }
         });
 
