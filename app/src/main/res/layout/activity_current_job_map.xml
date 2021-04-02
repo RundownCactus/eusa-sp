@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content">
                     </TextView>
                     <ImageView
-                        app:srcCompat="@drawable/ic_baseline_unverified_user"
+                        android:background="@drawable/ic_baseline_unverified_user"
                         android:layout_marginLeft="4dp"
                         android:layout_gravity="center"
                         android:layout_width="20dp"
@@ -111,7 +111,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_star"/>
+                        android:background="@drawable/ic_star"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"

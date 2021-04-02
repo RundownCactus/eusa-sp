@@ -61,11 +61,68 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     MaterialCardView settings;
     MaterialCardView promote;
     MaterialCardView history;
+    DatabaseReference completedJobRate;
+    List<JobHistory> jobHistoryList;
+    TextView completedJobsRate;
+    TextView cancelledJobRate;
     MaterialCardView cardrecentjob,cardongoingjob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
+        completedJobsRate=findViewById(R.id.completedJobsRate);
+        cancelledJobRate=findViewById(R.id.cancelledJobRate);
+        jobHistoryList=new ArrayList<>();
+        completedJobRate= FirebaseDatabase.getInstance().getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("Jobs");
+        completedJobRate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final int[] completedJobs={0};
+                final int[] cancelledJobs={0};
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    DatabaseReference jobref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(snap.getKey());
+                    jobref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.child("status").getValue().toString().equals("Complete"))
+                            {
+                                completedJobs[0]++;
+                                jobHistoryList.add(new JobHistory(snapshot.child("jobBookTime").getValue().toString(), "PKR " + snapshot.child("totalPrice").getValue().toString(),
+                                        "Job ID: "+snapshot.getKey(), snapshot.child("status").getValue().toString()));
+                            }
+                            else if(snapshot.child("status").getValue().toString().equals("Cancel by SP"))
+                            {
+                                cancelledJobs[0]++;
+                                jobHistoryList.add(new JobHistory(snapshot.child("jobBookTime").getValue().toString(), "PKR " + snapshot.child("totalPrice").getValue().toString(),
+                                        "Job ID: "+snapshot.getKey(), snapshot.child("status").getValue().toString()));
+                            }
+                            Log.d("Total List", Integer.toString(completedJobs[0]));
+                            float com=((float)completedJobs[0]/(completedJobs[0]+cancelledJobs[0]))*100;
+                            float can=((float)cancelledJobs[0]/(completedJobs[0]+cancelledJobs[0]))*100;
+                            String canDecimal = String.format("%.2f", can);
+                            cancelledJobRate.setText(canDecimal+"%");
+                            String comDecimal = String.format("%.2f", com);
+                            completedJobsRate.setText(comDecimal+"%");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
         /*card1=findViewById(R.id.card1);
         card1.setOnClickListener(new View.OnClickListener() {
             @Override

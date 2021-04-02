@@ -13,6 +13,7 @@ tools:context=".BasicSearch">
     android:id="@+id/nav_view"
     app:headerLayout="@layout/header"
     app:menu="@menu/main_menu"
+    android:visibility="gone"
     android:layout_width="300dp"
     android:layout_gravity="start"
     android:layout_height="match_parent"
@@ -229,6 +230,7 @@ tools:context=".BasicSearch">
                                     android:layout_height="0dp">
                                 </ImageView>
                                 <TextView
+                                    android:id="@+id/completedJobsRate"
                                     android:text="0%"
                                     android:textSize="18sp"
                                     android:textColor="@color/white"
@@ -240,9 +242,8 @@ tools:context=".BasicSearch">
                                     android:layout_height="0dp">
                                 </TextView>
                                 <TextView
-                                    android:text="Accepted"
+                                    android:text="Completed"
                                     android:textSize="16sp"
-
                                     android:layout_gravity="center"
                                     android:textStyle="normal"
                                     android:layout_weight="3"
@@ -268,6 +269,7 @@ tools:context=".BasicSearch">
                                     android:layout_height="0dp">
                                 </ImageView>
                                 <TextView
+                                    android:id="@+id/avgRating"
                                     android:text="0.0"
                                     android:textColor="@color/white"
                                     android:textSize="18sp"
@@ -303,6 +305,7 @@ tools:context=".BasicSearch">
                                     android:layout_height="0dp">
                                 </ImageView>
                                 <TextView
+                                    android:id="@+id/cancelledJobRate"
                                     android:text="0%"
                                     android:textColor="@color/white"
                                     android:textSize="18sp"
