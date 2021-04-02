@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:padding="32dp"
+    android:padding="16dp"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -35,22 +35,22 @@
 
 
     <LinearLayout
-        android:padding="16dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="110dp">
+        android:layout_height="wrap_content">
         <ImageView
             app:srcCompat="@drawable/ic_baseline_account_circle"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:visibility="gone"
-            android:layout_height="80dp">
+            android:layout_height="60dp">
 
         </ImageView>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/myimage"
             android:layout_gravity="center"
-            android:layout_width="78dp"
-            android:layout_height="78dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:src="@drawable/profile1" />
         <LinearLayout
             android:layout_marginLeft="8dp"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Hammad Ali"
                 android:textColor="@color/BlueColor"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/myimage">
             </TextView>
             <LinearLayout
@@ -74,7 +74,7 @@
                     android:text="Unverified"
                     android:textStyle="normal"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/gray"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -83,8 +83,8 @@
                     app:srcCompat="@drawable/ic_baseline_unverified_user"
                     android:layout_marginLeft="4dp"
                     android:layout_gravity="center"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp">
+                    android:layout_width="18dp"
+                    android:layout_height="18dp">
 
                 </ImageView>
             </LinearLayout>
@@ -107,13 +107,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.8"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_star"
-                    tools:ignore="ContentDescription" />
+                    android:background="@drawable/ic_star" />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rating"
-                    android:textSize="17sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
