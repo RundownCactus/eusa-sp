@@ -57,14 +57,10 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
     //Job Alertbox end
     //homepage
-    TextView cardUsername;
-    MaterialCardView settings;
-    MaterialCardView promote;
-    MaterialCardView history;
+    TextView cardUsername,completedJobsRate,avgRating,cancelledJobRate;
+    MaterialCardView settings,history,promote;
     DatabaseReference completedJobRate;
     List<JobHistory> jobHistoryList;
-    TextView completedJobsRate;
-    TextView cancelledJobRate;
     MaterialCardView cardrecentjob,cardongoingjob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +68,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_basic_search);
         completedJobsRate=findViewById(R.id.completedJobsRate);
         cancelledJobRate=findViewById(R.id.cancelledJobRate);
+        avgRating=findViewById(R.id.avgRating);
         jobHistoryList=new ArrayList<>();
         completedJobRate= FirebaseDatabase.getInstance().getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("Jobs");
         completedJobRate.addValueEventListener(new ValueEventListener() {
@@ -79,6 +76,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final int[] completedJobs={0};
                 final int[] cancelledJobs={0};
+                final int[] totalRatings={0};
+                final int[] ratings={0};
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     DatabaseReference jobref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(snap.getKey());
                     jobref.addValueEventListener(new ValueEventListener() {
@@ -86,6 +85,20 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.child("status").getValue().toString().equals("Complete"))
                             {
+                                if(!(snapshot.child("jobSPRating").getValue().toString().equals("")))
+                                {
+                                    totalRatings[0]++;
+                                    String temp=snapshot.child("jobSPRating").getValue().toString();
+                                    int myNum = 0;
+
+                                    try {
+                                        myNum = Integer.parseInt(temp);
+                                    } catch(NumberFormatException nfe) {
+
+                                    }
+                                    ratings[0]+=myNum;
+
+                                }
                                 completedJobs[0]++;
                                 jobHistoryList.add(new JobHistory(snapshot.child("jobBookTime").getValue().toString(), "PKR " + snapshot.child("totalPrice").getValue().toString(),
                                         "Job ID: "+snapshot.getKey(), snapshot.child("status").getValue().toString()));
@@ -103,6 +116,11 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                             cancelledJobRate.setText(canDecimal+"%");
                             String comDecimal = String.format("%.2f", com);
                             completedJobsRate.setText(comDecimal+"%");
+                            if(totalRatings[0]!=0) {
+                                float rat = ((float) ratings[0] / (totalRatings[0]));
+                                String ratDecimal = String.format("%.2f", rat);
+                                avgRating.setText(ratDecimal);
+                            }
                         }
 
                         @Override
