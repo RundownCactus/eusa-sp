@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/serviceTitle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Title"
+        android:textColorHint="#BAB9B9"
+        app:boxStrokeColor="#03A9F4"
+        app:endIconMode="clear_text"
+        app:endIconTint="#BAB9B9"
+        app:hintTextColor="#03A9F4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/getServiceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:inputType="text"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/serviceDescription"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Description"
+        android:textColorHint="#BAB9B9"
+        app:boxStrokeColor="#03A9F4"
+        app:endIconMode="clear_text"
+        app:endIconTint="#BAB9B9"
+        app:hintTextColor="#03A9F4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/getServiceDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:inputType="text"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/servicePrice"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Price"
+        app:prefixText="Rs. "
+        app:prefixTextColor="#000"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
+        android:textColorHint="#BAB9B9"
+        app:boxStrokeColor="#03A9F4"
+        app:endIconMode="clear_text"
+        app:endIconTint="#BAB9B9"
+        app:hintTextColor="#03A9F4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/getServicePrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:inputType="number"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/promoteServiceCancel"
+            android:layout_width="match_parent"
+            android:layout_weight="5"
+            android:layout_height="62dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Cancel"
+            android:textColor="@color/white">
+        </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/promoteServiceAdd"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_weight="5"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="ADD"
+            android:textColor="@color/white">
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+
+
+</LinearLayout>
