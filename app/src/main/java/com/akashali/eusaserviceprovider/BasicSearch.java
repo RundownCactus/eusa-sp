@@ -363,8 +363,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         promote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent=new Intent(BasicSearch.this,Settings.class);
-                //startActivity(intent);
+                Intent intent=new Intent(BasicSearch.this,PromoteService.class);
+                startActivity(intent);
             }
         });
         history.setOnClickListener(new View.OnClickListener() {
