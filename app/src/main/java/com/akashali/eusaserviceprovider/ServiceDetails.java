@@ -4,11 +4,22 @@ public class ServiceDetails {
     private String title;
     private String price;
     private String description;
+    private String key;
 
-    public ServiceDetails(String title, String price, String description) {
+
+    public ServiceDetails(String title, String price, String description, String key) {
         this.title = title;
         this.price = price;
         this.description = description;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getTitle() {
