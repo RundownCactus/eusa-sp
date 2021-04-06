@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:orientation="vertical">
-    <androidx.cardview.widget.CardView
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
         android:layout_height="wrap_content">
 
 
@@ -15,14 +18,13 @@
             android:id="@+id/history_ll"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="5"
-                >
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/promote_title"
@@ -45,7 +47,7 @@
                     android:layout_weight="2"
                     android:gravity="end"
                     android:textColor="@color/BlueColor"
-                    android:textSize="15sp">
+                    android:textSize="14sp">
                 </TextView>
             </LinearLayout>
             <RelativeLayout
@@ -62,11 +64,6 @@
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/gray"
-        android:layout_height="1dp">
-    </View>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

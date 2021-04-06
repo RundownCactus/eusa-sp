@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp"
     android:orientation="vertical">
-    <androidx.cardview.widget.CardView
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
         android:layout_height="wrap_content">
-
 
         <LinearLayout
             android:id="@+id/history_ll"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:padding="16dp"
+            android:padding="8dp"
             android:layout_height="match_parent">
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -25,7 +27,7 @@
                     android:id="@+id/jobbookdate_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:text="2020-12-06, 22:45"
                     android:textColor="@color/BlueColor">
                 </TextView>
@@ -38,7 +40,7 @@
                     android:layout_alignParentRight="true"
                     android:text="PKR 0"
                     android:textColor="@color/BlueColor"
-                    android:textSize="20sp">
+                    android:textSize="18sp">
                 </TextView>
             </RelativeLayout>
             <RelativeLayout
@@ -64,12 +66,6 @@
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
-        <View
-            android:layout_marginTop="75dp"
-            android:layout_width="match_parent"
-            android:background="@color/gray"
-            android:layout_height="1dp">
-        </View>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
