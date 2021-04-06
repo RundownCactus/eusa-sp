@@ -71,7 +71,7 @@ public class PromoteService extends AppCompatActivity {
                 alertDialog.setCanceledOnTouchOutside(false);
                 getServiceTitle.setText(serviceDetailsList.get(position).getTitle());
                 getServiceDescription.setText(serviceDetailsList.get(position).getDescription());
-                String correctPrice = serviceDetailsList.get(position).getPrice().replace("PKR ","");
+                String correctPrice = serviceDetailsList.get(position).getPrice().replace("Rs. ","");
                 getServicePrice.setText(correctPrice);
                 editService.setText("Edit Service");
                 add.setText("SAVE");
@@ -115,7 +115,7 @@ public class PromoteService extends AppCompatActivity {
                     serviceref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            serviceDetailsList.add(new ServiceDetails(snapshot.child("title").getValue().toString(), "PKR " + snapshot.child("price").getValue().toString(),
+                            serviceDetailsList.add(new ServiceDetails(snapshot.child("title").getValue().toString(), "Rs. " + snapshot.child("price").getValue().toString(),
                                     snapshot.child("description").getValue().toString(), snapshot.getKey().toString()));
                             adapter.notifyDataSetChanged();
                         }
