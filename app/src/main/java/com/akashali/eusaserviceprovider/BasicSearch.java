@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -62,10 +63,14 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     DatabaseReference completedJobRate;
     List<JobHistory> jobHistoryList;
     MaterialCardView cardrecentjob,cardongoingjob;
+    TextView recentendusername,recentjobtime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
+        recentendusername=findViewById(R.id.recentendusername);
+        recentjobtime=findViewById(R.id.recentjobtime);
         completedJobsRate=findViewById(R.id.completedJobsRate);
         cancelledJobRate=findViewById(R.id.cancelledJobRate);
         avgRating=findViewById(R.id.avgRating);
@@ -135,6 +140,69 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("Jobs");
+        Query lastQuery = databaseReference.orderByKey().limitToLast(1);
+        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String[] arrayString = dataSnapshot.getValue().toString().split("=");
+                String str1=arrayString[0];
+                String str2=str1.substring(1);
+
+                DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference().child("Jobs").child(str2);
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(!(snapshot.child("jobCompletionTime").getValue().toString().equals("")) && snapshot.child("status").getValue().toString().equals("Complete"))
+                        {
+                            String[] str1=snapshot.child("jobCompletionTime").getValue().toString().split(" ");
+                            String str2=str1[1];
+                            String str3=str2.substring(0,5);
+                            recentjobtime.setText(str3);
+                        }
+                        else if(!(snapshot.child("jobRejectTime").getValue().toString().equals("")) && snapshot.child("status").getValue().toString().equals("Job Rejected by SP"))
+                        {
+                            String[] str1=snapshot.child("jobRejectTime").getValue().toString().split(" ");
+                            String str2=str1[1];
+                            String str3=str2.substring(0,5);
+                            recentjobtime.setText(str3);
+                        }
+                        else if(!(snapshot.child("jobCancelTime").getValue().toString().equals("")))
+                        {
+                            String[] str1=snapshot.child("jobCancelTime").getValue().toString().split(" ");
+                            String str2=str1[1];
+                            String str3=str2.substring(0,5);
+                            recentjobtime.setText(str3);
+                        }
+
+                        DatabaseReference databaseRef1 = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(snapshot.child("uid").getValue().toString());
+                        databaseRef1.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Log.d("Total List 2", snapshot.getValue().toString() );
+                                recentendusername.setText(snapshot.child("fname").getValue().toString()+" "+snapshot.child("lname").getValue().toString());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors.
             }
         });
 
