@@ -22,8 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
-
 public class EditProfile extends AppCompatActivity {
     Integer REQUEST_CAMERA=1, SELECT_IMAGE=0, REQUEST_FIRSTNAME=2,REQUEST_LASTNAME=3,REQUEST_PHONE=4,REQUEST_EMAIL=5;
     ImageView imageViewBackArrowEditprofile,accountimage,circleImageView;
@@ -84,8 +82,8 @@ public class EditProfile extends AppCompatActivity {
         phoneeditprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(EditProfile.this,UpdatePhoneNumber.class);
-                startActivityForResult(intent,REQUEST_PHONE);
+                //Intent intent=new Intent(EditProfile.this,UpdatePhoneNumber.class);
+                //startActivityForResult(intent,REQUEST_PHONE);
             }
         });
         emaileditprofile=findViewById(R.id.emaileditprofile);
@@ -100,8 +98,8 @@ public class EditProfile extends AppCompatActivity {
         passwordeditprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(EditProfile.this,UpdatePassword.class);
-                startActivity(intent);
+                //Intent intent=new Intent(EditProfile.this,UpdatePassword.class);
+                //startActivity(intent);
             }
         });
         accountimage=findViewById(R.id.accountimage);
