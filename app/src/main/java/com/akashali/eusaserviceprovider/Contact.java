@@ -18,6 +18,15 @@ public class Contact {
     private String cnic;
     private String rating;
     private String pricerat;
+    private String isAvailable;
+
+    public String getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(String isAvailable) {
+        this.isAvailable = isAvailable;
+    }
 
     public String getCnic() {
         return cnic;
@@ -71,7 +80,7 @@ public class Contact {
         this.pricerat = pricerat;
     }
 
-    public Contact(String loc,String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat,String uid) {
+    public Contact(String loc,String cnic, String fname, String lname, String phone, String email, String address, String city, String type, String rating, String pricerat,String uid,String isAvailable) {
         this.loc = loc;
         this.fname = fname;
         this.lname = lname;
@@ -84,6 +93,7 @@ public class Contact {
         this.rating = rating;
         this.pricerat = pricerat;
         this.uid=uid;
+        this.isAvailable=isAvailable;
     }
 
     public void setLname(String lname) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,11 +66,29 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     List<JobHistory> jobHistoryList;
     MaterialCardView cardrecentjob,cardongoingjob;
     TextView recentendusername,recentjobtime;
+    SwitchMaterial availableforWork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
+        availableforWork=findViewById(R.id.availableswitch);
+        availableforWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.v("Switch State=", ""+isChecked);
+                if (isChecked)
+                {
+                    DatabaseReference isAvl=FirebaseDatabase.getInstance().getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("isAvailable");
+                    isAvl.setValue("Yes");
+                }
+                else
+                {
+                    DatabaseReference isAvl=FirebaseDatabase.getInstance().getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid()).child("isAvailable");
+                    isAvl.setValue("No");
+                }
+            }
+        });
         recentendusername=findViewById(R.id.recentendusername);
         recentjobtime=findViewById(R.id.recentjobtime);
         completedJobsRate=findViewById(R.id.completedJobsRate);

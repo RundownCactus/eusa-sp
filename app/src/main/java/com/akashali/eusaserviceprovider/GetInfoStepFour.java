@@ -73,7 +73,7 @@ public class GetInfoStepFour extends AppCompatActivity {
 
                 //CREATING THE NEW SERVICE PROVIDER
 
-                Contact newSP = new Contact(loc,cnic,fname,lname,phno,email,addr,city,Type,rat,prat,mAuth.getInstance().getCurrentUser().getUid());
+                Contact newSP = new Contact(loc,cnic,fname,lname,phno,email,addr,city,Type,rat,prat,mAuth.getInstance().getCurrentUser().getUid(),"No");
                 myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
                 myref.setValue(newSP);
                 //START
