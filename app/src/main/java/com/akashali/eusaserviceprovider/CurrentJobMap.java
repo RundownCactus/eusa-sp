@@ -19,6 +19,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,16 +73,34 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     //GOOGLE MAPS VARIABLES END
     String spid,uid,key,userLatLng,userphno;
     Double lat,lon;
-    DatabaseReference myref,userref,jobcancelref,jobref;
+    DatabaseReference myref,userref,jobcancelref,jobref,services,services1;
     String spLatLngStart;
     TextView currentjobuserfullname;
     ImageView currentjobusercall;
     MaterialButton booking_complete,booking_cancel1;
     String userrating;
+    LinearLayout service1,service2,service3;
+    TextView s1_title,s2_title,s3_title;
+    TextView s1_price,s2_price,s3_price;
+    TextView s1_description,s2_description,s3_description;
+    List<ServiceDetails> myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_job_map);
+        myList=new ArrayList<>();
+        service1=findViewById(R.id.service1);
+        service2=findViewById(R.id.service2);
+        service3=findViewById(R.id.service3);
+        s1_title=findViewById(R.id.s1_title);
+        s2_title=findViewById(R.id.s2_title);
+        s3_title=findViewById(R.id.s3_title);
+        s1_price=findViewById(R.id.s1_price);
+        s2_price=findViewById(R.id.s2_price);
+        s3_price=findViewById(R.id.s3_price);
+        s1_description=findViewById(R.id.s1_description);
+        s2_description=findViewById(R.id.s2_description);
+        s3_description=findViewById(R.id.s3_description);
 
         //Init MAP/POP UP variables
 
@@ -101,8 +120,69 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         Log.d("TAGAR",key);
         Log.d("TAGAR",userLatLng);
 
-        //BOOKING CANCELLED BY SERVICE PROVIDER
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        services=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key);
+        services.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                services1=FirebaseDatabase.getInstance().getReference().child("Services").child(snapshot.child("orderedService").getValue().toString());
+                services1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot snap : snapshot.getChildren())
+                        {
+                            Log.d("ABCDE",snap.getValue().toString());
+                            if(myList.size()==3) {
+                                myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
+                                service3.setVisibility(View.VISIBLE);
+                                s3_title.setText(snap.child("title").getValue().toString());
+                                s3_description.setText(snap.child("description").getValue().toString());
+                                s3_price.setText(snap.child("price").getValue().toString());
+                            }
+                            if(myList.size()==2) {
+                                myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
+                                service2.setVisibility(View.VISIBLE);
+                                s2_title.setText(snap.child("title").getValue().toString());
+                                s2_description.setText(snap.child("description").getValue().toString());
+                                s2_price.setText(snap.child("price").getValue().toString());
+                            }
+                            if(myList.size()==1) {
+                                myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
+                                service1.setVisibility(View.VISIBLE);
+                                s1_title.setText(snap.child("title").getValue().toString());
+                                s1_description.setText(snap.child("description").getValue().toString());
+                                s1_price.setText(snap.child("price").getValue().toString());
+                            }
+                            if(myList.size()==0) {
+                                service1.setVisibility(View.GONE);
+                                service2.setVisibility(View.GONE);
+                                service3.setVisibility(View.GONE);
+                                myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
+                            }
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //BOOKING CANCELLED BY SERVICE PROVIDER
         booking_cancel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,6 +361,26 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     .apiKey(getString(R.string.google_maps_api_key))
                     .build();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     /**
