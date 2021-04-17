@@ -10,5 +10,14 @@
     <item name="android:windowBackground">@drawable/background_splashscreen</item>
     
 </style>
+    <style name="ProgressBarStyle">
+        <item name="colorAccent">@color/BlueColor</item>
+    </style>
+    <style name="ProgressBarStyleWhite">
+        <item name="colorAccent">@color/white</item>
+    </style>
+    <style name="ProgressBarStyleGrey">
+        <item name="colorAccent">@color/gray</item>
+    </style>
 
 </resources>
