@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,6 +80,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     ImageView currentjobusercall;
     MaterialButton booking_complete,booking_cancel1;
     String userrating;
+
     LinearLayout service1,service2,service3;
     TextView s1_title,s2_title,s3_title;
     TextView s1_price,s2_price,s3_price;
@@ -126,6 +128,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     @Override
     protected void onResume() {
         super.onResume();
+
         services=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key);
         services.addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,6 +137,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 services1.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myList.clear();
                         for (DataSnapshot snap : snapshot.getChildren())
                         {
                             Log.d("ABCDE",snap.getValue().toString());
@@ -230,6 +234,24 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 final ImageView threeStar=(ImageView)jobCompleteView.findViewById(R.id.threestar);
                 final ImageView fourStar=(ImageView)jobCompleteView.findViewById(R.id.fourstar);
                 final ImageView fiveStar=(ImageView)jobCompleteView.findViewById(R.id.fivestar);
+                final EditText spfeedback=(EditText)jobCompleteView.findViewById(R.id.spfeedback);
+                final TextView completejobusername=(TextView) jobCompleteView.findViewById(R.id.completejobusername);
+                final TextView myrating=(TextView) jobCompleteView.findViewById(R.id.myrating);
+                final TextView jobprice=(TextView) jobCompleteView.findViewById(R.id.jobprice);
+
+
+                userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
+                userref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        completejobusername.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 //RATING MECHANISM
 
@@ -312,6 +334,9 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                         comref.setValue("Complete");
                         DatabaseReference jobCompleteTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCompletionTime");
                         jobCompleteTime1.setValue(jobCompleteTime);
+                        String feedback=spfeedback.getText().toString();
+                        DatabaseReference spFeedback1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("spFeedback");
+                        spFeedback1.setValue(feedback);
                         DatabaseReference ratref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobUserRating");
                         ratref.setValue(userrating);
                         Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
