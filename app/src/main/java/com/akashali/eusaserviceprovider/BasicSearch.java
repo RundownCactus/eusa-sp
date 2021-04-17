@@ -486,7 +486,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 Intent intent3=new Intent(BasicSearch.this,Notifications.class);
                 startActivity(intent3);
                 break;
-            case R.id.nav_contactus:
+            case R.id.nav_help:
                 Intent intent4=new Intent(BasicSearch.this,ContactUs.class);
                 startActivity(intent4);
                 break;

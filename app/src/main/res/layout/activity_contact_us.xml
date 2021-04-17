@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:text="Contact Us"
+            android:text="Help"
             android:textColor="#fff"
             android:textSize="26sp"
             android:textStyle="bold"
