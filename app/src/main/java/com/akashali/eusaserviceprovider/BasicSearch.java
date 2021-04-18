@@ -494,6 +494,10 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 Intent intent5=new Intent(BasicSearch.this,ApplyForWork.class);
                 startActivity(intent5);
                 break;
+            case R.id.nav_SignOut:
+                //Intent intent6=new Intent(BasicSearch.this,ApplyForWork.class);
+                //startActivity(intent6);
+                break;
         }
         return true;
     }

@@ -32,6 +32,11 @@
             android:icon="@drawable/ic_round_work_24"
             android:title="Work Details">
         </item>
+        <item
+            android:id="@+id/nav_SignOut"
+            android:icon="@drawable/ic_round_logout_24"
+            android:title="Sign out">
+        </item>
     </group>
 
 </menu>
