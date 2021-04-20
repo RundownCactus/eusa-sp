@@ -399,6 +399,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
 
         View header = navigationView.getHeaderView(0);
         text = (TextView) header.findViewById(R.id.username);
+        TextView categoy= (TextView) header.findViewById(R.id.category);
         cardUsername=findViewById(R.id.cardUsername);
         profileImage=(ImageView) header.findViewById(R.id.circleImageView);
         rootnode = FirebaseDatabase.getInstance();
@@ -408,8 +409,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
         myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                text.setText(snapshot.child("fname").getValue().toString());
+                text.setText(snapshot.child("fname").getValue().toString()+ " "+ snapshot.child("lname").getValue().toString());
                 cardUsername.setText(snapshot.child("fname").getValue().toString());
+                categoy.setText(snapshot.child("type").getValue().toString());
             }
 
             @Override
