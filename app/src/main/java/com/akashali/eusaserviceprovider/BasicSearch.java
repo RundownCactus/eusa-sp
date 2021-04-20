@@ -495,6 +495,9 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                 startActivity(intent5);
                 break;
             case R.id.nav_SignOut:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent6=new Intent(BasicSearch.this,LetsGetStarted.class);
+                startActivity(intent6);
                 //Intent intent6=new Intent(BasicSearch.this,ApplyForWork.class);
                 //startActivity(intent6);
                 break;
