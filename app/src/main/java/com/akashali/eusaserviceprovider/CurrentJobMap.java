@@ -446,14 +446,14 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
             public void onResult(DirectionsResult result) {
-                Log.d("nope", "onResult: routes: " + result.routes[0].toString());
-                Log.d("nope", "onResult: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
+                Log.d("nope2", "onResult: routes: " + result.routes[0].toString());
+                Log.d("nope2", "onResult: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
                 addPolylinesToMap(result);
             }
 
             @Override
             public void onFailure(Throwable e) {
-                Log.e("nope", "onFailure: " + e.getMessage() );
+                Log.e("nope2", "onFailure: " + e.getMessage() );
 
             }
         });
@@ -484,9 +484,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
 
                     // This loops through all the LatLng coordinates of ONE polyline.
                     for(com.google.maps.model.LatLng latLng: decodedPath){
-
 //                        Log.d(TAG, "run: latlng: " + latLng.toString());
-
                         newDecodedPath.add(new LatLng(
                                 latLng.lat,
                                 latLng.lng
@@ -524,15 +522,16 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
                 mMap.animateCamera(cameraUpdate);
-                calculateDirections(marker);
                 spLatLngStart="";
                 spLatLngStart+=latLng.latitude;
                 spLatLngStart+=",";
                 spLatLngStart+=latLng.longitude;
                 myref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("spLatlngStart");
                 myref.setValue(spLatLngStart);
+                calculateDirections(marker);
                 loadingBackground.setVisibility(View.GONE);
                 maps_progressbar.setVisibility(View.GONE);
+
                 // Add a marker in Sydney and move the camera
                 //CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
                 //LatLng myLocation = new LatLng(33.699989, 73.001916);
