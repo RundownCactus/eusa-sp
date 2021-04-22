@@ -13,7 +13,7 @@ tools:context=".BasicSearch">
     android:id="@+id/nav_view"
     app:headerLayout="@layout/header"
     app:menu="@menu/main_menu"
-    android:visibility="visible"
+    android:visibility="gone"
     android:layout_width="300dp"
     app:itemTextColor="@color/BlueColor"
     app:itemIconTint="@color/BlueColor"
@@ -720,12 +720,12 @@ tools:context=".BasicSearch">
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="5"
-                                    app:srcCompat="@drawable/ic_historyicon"
+                                    app:srcCompat="@drawable/ic_round_history_24"
                                     >
                                 </ImageView>
                                 <TextView
                                     android:text="History"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
                                     android:textStyle="normal"
                                     android:gravity="center"
                                     android:textColor="#000"
@@ -766,11 +766,11 @@ tools:context=".BasicSearch">
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="6"
-                                    app:srcCompat="@drawable/ic_promoteicon">
+                                    app:srcCompat="@drawable/ic_round_campaign_24">
                                 </ImageView>
                                 <TextView
                                     android:text="Promote"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
                                     android:textStyle="normal"
                                     android:gravity="center"
                                     android:textColor="#000"
@@ -807,12 +807,163 @@ tools:context=".BasicSearch">
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="6"
-                                    app:srcCompat="@drawable/ic_settingicon"
+                                    app:srcCompat="@drawable/ic_round_settings_24"
                                     >
                                 </ImageView>
                                 <TextView
                                     android:text="Settings"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    android:gravity="center"
+                                    android:textColor="#000"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="3"
+                                    android:layout_height="0dp">
+
+                                </TextView>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card4"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="9"
+                    android:orientation="horizontal"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/notifications"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:elevation="40dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            tools:ignore="MissingConstraints">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_weight="5"
+                                    app:srcCompat="@drawable/ic_round_notifications_24" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="3"
+                                    android:gravity="center"
+                                    android:text="Notifications"
+                                    android:textColor="#000"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:gravity="center"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/payments"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:elevation="40dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            tools:ignore="MissingConstraints">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:weightSum="10"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+                                <ImageView
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="6"
+                                    app:srcCompat="@drawable/ic_round_payments_24">
+                                </ImageView>
+                                <TextView
+                                    android:text="Payments"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    android:gravity="center"
+                                    android:textColor="#000"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="3"
+                                    android:layout_height="0dp">
+
+                                </TextView>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/help"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:elevation="40dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            tools:ignore="MissingConstraints">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:weightSum="10"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+                                <ImageView
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="6"
+                                    app:srcCompat="@drawable/ic_round_help_24"
+                                    >
+                                </ImageView>
+                                <TextView
+                                    android:text="Help"
+                                    android:textSize="15sp"
                                     android:textStyle="normal"
                                     android:gravity="center"
                                     android:textColor="#000"

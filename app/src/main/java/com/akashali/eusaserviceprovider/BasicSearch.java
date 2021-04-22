@@ -61,7 +61,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     //Job Alertbox end
     //homepage
     TextView cardUsername,completedJobsRate,avgRating,cancelledJobRate;
-    MaterialCardView settings,history,promote;
+    MaterialCardView settings,history,promote,notifications,payments,help;
     DatabaseReference completedJobRate;
     List<JobHistory> jobHistoryList;
     MaterialCardView cardrecentjob,cardongoingjob;
@@ -72,6 +72,30 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_search);
+        notifications=findViewById(R.id.notifications);
+        payments=findViewById(R.id.payments);
+        help=findViewById(R.id.help);
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BasicSearch.this,Notifications.class);
+                startActivity(intent);
+            }
+        });
+        payments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BasicSearch.this,Payment.class);
+                startActivity(intent);
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BasicSearch.this,ContactUs.class);
+                startActivity(intent);
+            }
+        });
         availableforWork=findViewById(R.id.availableswitch);
         availableforWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
