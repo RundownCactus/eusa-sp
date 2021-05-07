@@ -392,7 +392,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         if(mGeoApiContext == null){
             mGeoApiContext = new GeoApiContext.Builder()
-                    .apiKey(getString(R.string.google_maps_key))
+                    .apiKey("AIzaSyDY2msWTOTgGlggZVsrWo_d9WpVRxTmKzk")
                     .build();
         }
     }

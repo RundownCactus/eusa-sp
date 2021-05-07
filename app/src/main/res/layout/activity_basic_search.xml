@@ -13,7 +13,7 @@ tools:context=".BasicSearch">
     android:id="@+id/nav_view"
     app:headerLayout="@layout/header"
     app:menu="@menu/main_menu"
-    android:visibility="gone"
+    android:visibility="visible"
     android:layout_width="300dp"
     app:itemTextColor="@color/BlueColor"
     app:itemIconTint="@color/BlueColor"
@@ -253,7 +253,7 @@ tools:context=".BasicSearch">
                                 </TextView>
                                 <TextView
                                     android:text="Completed"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:layout_gravity="center"
                                     android:textStyle="normal"
                                     android:layout_weight="3"
@@ -292,7 +292,7 @@ tools:context=".BasicSearch">
                                 </TextView>
                                 <TextView
                                     android:text="Rating"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
 
                                     android:layout_gravity="center"
                                     android:textStyle="normal"
@@ -328,8 +328,7 @@ tools:context=".BasicSearch">
                                 </TextView>
                                 <TextView
                                     android:text="Cancelled"
-                                    android:textSize="16sp"
-
+                                    android:textSize="14sp"
                                     android:layout_gravity="center"
                                     android:textStyle="normal"
                                     android:layout_weight="3"
