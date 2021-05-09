@@ -79,9 +79,11 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     DatabaseReference myref,userref,jobcancelref,jobref,services,services1;
     String spLatLngStart;
     TextView currentjobuserfullname;
-    ImageView currentjobusercall;
+    RelativeLayout currentjobusercall,currentjobuserchat;
     MaterialButton booking_complete,booking_cancel1;
     String userrating;
+    String myChatKey;
+    String username;
 
     LinearLayout service1,service2,service3;
     TextView s1_title,s2_title,s3_title;
@@ -117,11 +119,13 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
 
         currentjobuserfullname=findViewById(R.id.currentjobuserfullname);
         currentjobusercall=findViewById(R.id.currentjobusercall);
+        currentjobuserchat=findViewById(R.id.currentjobuserchat);
         booking_complete=findViewById(R.id.booking_complete);
         booking_cancel1=findViewById(R.id.booking_cancel1);
         spid = getIntent().getStringExtra("spid");
         uid = getIntent().getStringExtra("uid");
         key = getIntent().getStringExtra("key");
+        myChatKey=getIntent().getStringExtra("chat");
         userLatLng=getIntent().getStringExtra("userLatLng");
         String [] loc = userLatLng.split(",",2);
         lat = Double.parseDouble(loc[0]);
@@ -137,6 +141,15 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     @Override
     protected void onResume() {
         super.onResume();
+        currentjobuserchat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CurrentJobMap.this,Chat.class);
+                intent.putExtra("myChat",myChatKey);
+                intent.putExtra("username",currentjobuserfullname.getText().toString());
+                startActivity(intent);
+            }
+        });
 
         services=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key);
         services.addValueEventListener(new ValueEventListener() {
@@ -177,9 +190,6 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                                 service3.setVisibility(View.GONE);
                                 myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
                             }
-
-
-
                         }
                     }
 
@@ -392,7 +402,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         if(mGeoApiContext == null){
             mGeoApiContext = new GeoApiContext.Builder()
-                    .apiKey("AIzaSyDY2msWTOTgGlggZVsrWo_d9WpVRxTmKzk")
+                    .apiKey(getString(R.string.google_maps_key))
                     .build();
         }
     }

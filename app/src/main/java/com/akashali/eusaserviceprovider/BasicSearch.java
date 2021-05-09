@@ -53,6 +53,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     String key;
 
 
+
     //Job Alertbox start
     MaterialCardView current_job_card;
     MaterialCardView card4,card1;
@@ -340,6 +341,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                                     intent.putExtra("spid",jobs.child("spid").getValue().toString());
                                     intent.putExtra("uid",jobs.child("uid").getValue().toString());
                                     intent.putExtra("key",jobs.getKey());
+                                    intent.putExtra("chat",jobs.child("chat").getValue().toString());
                                     key=jobs.getKey();
                                     intent.putExtra("userLatLng",jobs.child("userLatLng").getValue().toString());
                                     myref = rootnode.getReference().child("Users").child("ServiceProviders").child(mAuth.getInstance().getCurrentUser().getUid());
