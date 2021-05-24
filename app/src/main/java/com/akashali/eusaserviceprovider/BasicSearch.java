@@ -49,7 +49,7 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
     private FirebaseAuth mAuth;
     private String Addr;
     private String Loc;
-    TextView name;
+    TextView name,spdistancetext;
     String key;
 
 
@@ -324,6 +324,8 @@ public class BasicSearch extends AppCompatActivity implements NavigationView.OnN
                             //Log.d("TAG",jobs.getKey());
                             alertDialog.setCanceledOnTouchOutside(false);
                             name = jobView.findViewById(R.id.servicebooker);
+                            spdistancetext=jobView.findViewById(R.id.spdistancetext);
+                            spdistancetext.setText("You are receiving a service booking "+jobs.child("spdistance").getValue().toString()+" kilometers away.");
                             name.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString() );
                             DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("status");
                             DatabaseReference jobAcceptTime=FirebaseDatabase.getInstance().getReference().child("Jobs").child(jobs.getKey()).child("jobAcceptTime");

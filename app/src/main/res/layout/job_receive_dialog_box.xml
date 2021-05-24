@@ -10,16 +10,17 @@
     <TextView
         android:text="New Job Alert!"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/BlueColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </TextView>
     <TextView
-        android:text="You are receiving a service booking from"
+        android:id="@+id/spdistancetext"
+        android:text="You are receiving a service booking 5.6 kilometers away."
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textColor="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -133,6 +134,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginTop="8dp"
