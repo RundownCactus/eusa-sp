@@ -229,6 +229,113 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     startActivity(intent);
                     finish();
                 }
+                //if the job is completed by service provider.
+                if(!(snapshot.child("jobSPRating").getValue().toString().equals("")) && !(snapshot.child("jobCompletionTime").getValue().toString().equals("")) && (snapshot.child("status").getValue().toString().equals("Complete")))
+                {
+                    //Log.d("TAGA",snapshot.getKey());
+                    final AlertDialog.Builder job_complete_alert_dialog=new AlertDialog.Builder(CurrentJobMap.this);
+                    View jobCompleteView=getLayoutInflater().inflate(R.layout.job_complete_dialog_box,null);
+                    final MaterialButton complete=(MaterialButton)jobCompleteView.findViewById(R.id.booking_complete);
+
+                    final ImageView oneStar=(ImageView)jobCompleteView.findViewById(R.id.onestar);
+                    final ImageView twoStar=(ImageView)jobCompleteView.findViewById(R.id.twostar);
+                    final ImageView threeStar=(ImageView)jobCompleteView.findViewById(R.id.threestar);
+                    final ImageView fourStar=(ImageView)jobCompleteView.findViewById(R.id.fourstar);
+                    final ImageView fiveStar=(ImageView)jobCompleteView.findViewById(R.id.fivestar);
+                    final EditText userFeedback=(EditText)jobCompleteView.findViewById(R.id.spfeedback);
+                    final TextView completejobusername=(TextView) jobCompleteView.findViewById(R.id.completejobusername);
+                    final TextView myrating=(TextView) jobCompleteView.findViewById(R.id.myrating);
+                    final TextView jobprice=(TextView) jobCompleteView.findViewById(R.id.jobprice);
+
+                    userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
+                    userref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            completejobusername.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    userrating="0";
+                    oneStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            twoStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            userrating="1";
+                        }
+                    });
+                    twoStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            userrating="2";
+                        }
+                    });
+                    threeStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            userrating="3";
+                        }
+                    });
+                    fourStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
+                            userrating="4";
+                        }
+                    });
+                    fiveStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            fiveStar.setImageResource(R.drawable.ic_baseline_star_yellow);
+                            userrating="5";
+                        }
+                    });
+
+                    job_complete_alert_dialog.setView(jobCompleteView);
+                    final AlertDialog alertDialog=job_complete_alert_dialog.create();
+                    alertDialog.setCanceledOnTouchOutside(false);
+
+                    complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            DatabaseReference ratref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobUserRating");
+                            ratref.setValue(userrating);
+                            String feedback=userFeedback.getText().toString();
+                            DatabaseReference userFeedback1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("userFeedback");
+                            userFeedback1.setValue(feedback);
+                            Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    alertDialog.show();
+                }
             }
 
             @Override
@@ -236,136 +343,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
 
             }
         });
-        booking_complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
 
-                //SETTING JOB COMPLETION VARIABLES
-
-                final AlertDialog.Builder job_complete_alert_dialog=new AlertDialog.Builder(CurrentJobMap.this);
-                View jobCompleteView=getLayoutInflater().inflate(R.layout.job_complete_dialog_box,null);
-                final MaterialButton back=(MaterialButton)jobCompleteView.findViewById(R.id.booking_back);
-                final MaterialButton complete=(MaterialButton)jobCompleteView.findViewById(R.id.booking_complete);
-
-                final ImageView oneStar=(ImageView)jobCompleteView.findViewById(R.id.onestar);
-                final ImageView twoStar=(ImageView)jobCompleteView.findViewById(R.id.twostar);
-                final ImageView threeStar=(ImageView)jobCompleteView.findViewById(R.id.threestar);
-                final ImageView fourStar=(ImageView)jobCompleteView.findViewById(R.id.fourstar);
-                final ImageView fiveStar=(ImageView)jobCompleteView.findViewById(R.id.fivestar);
-                final EditText spfeedback=(EditText)jobCompleteView.findViewById(R.id.spfeedback);
-                final TextView completejobusername=(TextView) jobCompleteView.findViewById(R.id.completejobusername);
-                final TextView myrating=(TextView) jobCompleteView.findViewById(R.id.myrating);
-                final TextView jobprice=(TextView) jobCompleteView.findViewById(R.id.jobprice);
-
-
-                userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
-                userref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        completejobusername.setText(snapshot.child("fname").getValue().toString() + " "+ snapshot.child("lname").getValue().toString());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                //RATING MECHANISM
-
-                userrating="0";
-                oneStar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        twoStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        userrating="1";
-                    }
-                });
-                twoStar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        threeStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        userrating="2";
-                    }
-                });
-                threeStar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        fourStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        userrating="3";
-                    }
-                });
-                fourStar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        fiveStar.setImageResource(R.drawable.ic_baseline_star_grey);
-                        userrating="4";
-                    }
-                });
-                fiveStar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        oneStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        twoStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        threeStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        fourStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        fiveStar.setImageResource(R.drawable.ic_baseline_star_yellow);
-                        userrating="5";
-                    }
-                });
-
-                //CREATING ALERT FOR JOB COMPLETION
-
-                job_complete_alert_dialog.setView(jobCompleteView);
-                final AlertDialog alertDialog=job_complete_alert_dialog.create();
-                alertDialog.setCanceledOnTouchOutside(false);
-                back.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alertDialog.dismiss();
-                    }
-                });
-                complete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        // JOB COMPLETE
-
-                        String jobCompleteTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-                        DatabaseReference comref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("status");
-                        comref.setValue("Complete");
-                        DatabaseReference jobCompleteTime1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobCompletionTime");
-                        jobCompleteTime1.setValue(jobCompleteTime);
-                        String feedback=spfeedback.getText().toString();
-                        DatabaseReference spFeedback1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("spFeedback");
-                        spFeedback1.setValue(feedback);
-                        DatabaseReference ratref=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("jobUserRating");
-                        ratref.setValue(userrating);
-                        Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                alertDialog.show();
-            }
-        });
 
         userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
         userref.addListenerForSingleValueEvent(new ValueEventListener() {
