@@ -142,6 +142,7 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
+        mchat.clear();
         getMessages();
     }
 
