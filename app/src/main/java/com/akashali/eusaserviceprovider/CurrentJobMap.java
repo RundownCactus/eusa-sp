@@ -84,6 +84,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     String userrating;
     String myChatKey;
     String username;
+    AlertDialog alertDialog;
 
     LinearLayout service1,service2,service3;
     TextView s1_title,s2_title,s3_title;
@@ -168,21 +169,21 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                                 service3.setVisibility(View.VISIBLE);
                                 s3_title.setText(snap.child("title").getValue().toString());
                                 s3_description.setText(snap.child("description").getValue().toString());
-                                s3_price.setText(snap.child("price").getValue().toString());
+                                s3_price.setText("Rs. "+snap.child("price").getValue().toString());
                             }
                             if(myList.size()==2) {
                                 myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
                                 service2.setVisibility(View.VISIBLE);
                                 s2_title.setText(snap.child("title").getValue().toString());
                                 s2_description.setText(snap.child("description").getValue().toString());
-                                s2_price.setText(snap.child("price").getValue().toString());
+                                s2_price.setText("Rs. "+snap.child("price").getValue().toString());
                             }
                             if(myList.size()==1) {
                                 myList.add(new ServiceDetails(snap.child("title").getValue().toString(), snap.child("price").getValue().toString(), snap.child("description").getValue().toString(), snap.child("key").getValue().toString()));
                                 service1.setVisibility(View.VISIBLE);
                                 s1_title.setText(snap.child("title").getValue().toString());
                                 s1_description.setText(snap.child("description").getValue().toString());
-                                s1_price.setText(snap.child("price").getValue().toString());
+                                s1_price.setText("Rs. "+snap.child("price").getValue().toString());
                             }
                             if(myList.size()==0) {
                                 service1.setVisibility(View.GONE);
@@ -247,6 +248,18 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     final TextView myrating=(TextView) jobCompleteView.findViewById(R.id.myrating);
                     final TextView jobprice=(TextView) jobCompleteView.findViewById(R.id.jobprice);
 
+                    final LinearLayout paymentStatus=(LinearLayout) jobCompleteView.findViewById(R.id.paymentStatus);
+                    final TextView paymentText=(TextView) jobCompleteView.findViewById(R.id.paymentText);
+                    jobprice.setText("Rs. "+snapshot.child("totalPrice").getValue().toString()+".00");
+
+                    if (snapshot.child("paymentStatus").getValue().toString().equals("Cash Payment Confirmed."))
+                    {
+                        paymentText.setText("You can collect Rs. "+snapshot.child("totalPrice").getValue().toString()+".00"+" from customer.");
+                    }
+                    if (snapshot.child("paymentStatus").getValue().toString().equals("JazzCash Payment Confirmed."))
+                    {
+                        paymentText.setText("Payment Rs. "+snapshot.child("totalPrice").getValue().toString()+".00"+" paid through JazzCash.");
+                    }
                     userref=FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid);
                     userref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -318,7 +331,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     });
 
                     job_complete_alert_dialog.setView(jobCompleteView);
-                    final AlertDialog alertDialog=job_complete_alert_dialog.create();
+                    alertDialog=job_complete_alert_dialog.create();
                     alertDialog.setCanceledOnTouchOutside(false);
 
                     complete.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +342,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                             String feedback=userFeedback.getText().toString();
                             DatabaseReference userFeedback1=FirebaseDatabase.getInstance().getReference().child("Jobs").child(key).child("userFeedback");
                             userFeedback1.setValue(feedback);
+                            alertDialog.dismiss();
                             Intent intent=new Intent(CurrentJobMap.this,BasicSearch.class);
                             startActivity(intent);
                             finish();
@@ -388,6 +402,10 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (alertDialog != null) {
+            alertDialog.dismiss();
+            alertDialog = null;
+        }
     }
 
     @Override
