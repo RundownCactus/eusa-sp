@@ -231,7 +231,7 @@ public class CurrentJobMap extends FragmentActivity implements OnMapReadyCallbac
                     finish();
                 }
                 //if the job is completed by service provider.
-                if(!(snapshot.child("jobSPRating").getValue().toString().equals("")) && !(snapshot.child("jobCompletionTime").getValue().toString().equals("")) && (snapshot.child("status").getValue().toString().equals("Complete")))
+                if((snapshot.child("jobUserRating").getValue().toString().equals("")) && !(snapshot.child("jobSPRating").getValue().toString().equals("")) && !(snapshot.child("jobCompletionTime").getValue().toString().equals("")) && (snapshot.child("status").getValue().toString().equals("Complete")))
                 {
                     //Log.d("TAGA",snapshot.getKey());
                     final AlertDialog.Builder job_complete_alert_dialog=new AlertDialog.Builder(CurrentJobMap.this);
